@@ -5,7 +5,7 @@
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
-        "lib": ["dom", "es2015"],
+        "lib": ["dom", "es2015", "es2017"],
         "module": "es2015",
         "moduleResolution": "node",
         "noImplicitAny": true,
@@ -16,6 +16,7 @@
             "~/lib/*": ["./lib/*"],
             "~/config/*": ["./config/*"]
         },
+        "types": ["jest"],
         "removeComments": true,
         "sourceMap": true,
         "strict": true,

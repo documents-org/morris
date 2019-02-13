@@ -26,10 +26,10 @@ export const frenchPlaintextRules: RuleInterface[] = [
             let output = ''
             for (const char of str) {
                 if (char === '"') {
-                  output += open ? LIST.RQUOTE : LIST.LQUOTE
-                  open = !open
-                  continue
-              }
+                    output += open ? LIST.RQUOTE : LIST.LQUOTE
+                    open = !open
+                    continue
+                }
                 output += char
             }
             return output
