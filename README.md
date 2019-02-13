@@ -1,4 +1,4 @@
-# morris
+# Morris
 Morris is a locale-defined typographic rules fixer
 
 ### Références
