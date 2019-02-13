@@ -8,6 +8,10 @@ export class Morris {
         this.rules = rules
     }
 
+    get getRules(): RuleInterface[] {
+        return this.rules
+    }
+
     format(text: string): string {
         return this.rules.reduce((str, rule) => {
             if (typeof rule.replace === 'string') {

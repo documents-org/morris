@@ -23,6 +23,6 @@
         "suppressImplicitAnyIndexErrors": true,
         "target": "es5"
     },
-    "include": ["lib/*.ts", "config/*.ts"],
+    "include": ["lib/*.ts", "config/*.ts", "test/*.ts"],
     "exclude": ["node_modules"]
 }
