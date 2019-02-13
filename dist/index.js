@@ -2,16 +2,20 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var rules = [];
+
 var Morris = (function () {
-    function Morris() {
-        this.name = 'morris';
+    function Morris(rules$$1) {
+        this.rules = rules$$1;
     }
-    Morris.prototype.hello = function () {
-        return 'hello';
+    Morris.prototype.format = function (text) {
+        return this.rules.reduce(function (str, rule) {
+            return str.replace(rule.find, rule.replace);
+        }, text);
     };
     return Morris;
 }());
-var index = new Morris();
+var index = new Morris(rules);
 
 exports.Morris = Morris;
 exports.default = index;
