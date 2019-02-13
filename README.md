@@ -14,7 +14,7 @@ m.format("string");
 const m = new Morris(frenchPlaintextRules); // equivalent
 m.format("string");
 
-const m = new Morris([frenchPlaintextRules, frenchHtmlAwareRules]); // equivalent
+const m = new Morris([frenchPlaintextRules, frenchHtmlAwareRules]); // two sets of rules will be merged.
 m.format("string");
 
 ```
