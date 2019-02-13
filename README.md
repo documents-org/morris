@@ -5,6 +5,21 @@ It's designed to operate on raw text.
 
 Its counterpart to work in a DOM environment and add real layout rules, such as line awareness, content block size awareness, hyphenation (or avoidance of), will be found at [@documents-design/morris-dom.git](https://github.com/documents-design/morris-dom.git).
 
+## Usage
+
+```
+const m = new Morris(); // "frenchPlaintextRules" rules are loaded by default.
+m.format("string");
+
+const m = new Morris(frenchPlaintextRules); // equivalent
+m.format("string");
+
+const m = new Morris([frenchPlaintextRules, frenchHtmlAwareRules]); // equivalent
+m.format("string");
+
+```
+
+
 ## Rules
 All rules satisfy RuleInterface.
 
@@ -45,17 +60,17 @@ You're then free to iterate on it, use a parsing strategy, [...]
 
 ```
 > let m = require('./dist/index');
-> m.Morris.test();
-Input : Il n'est pas évident , de "régler" le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses...
-Replaces three dots with an ellipsis : Il n'est pas évident , de "régler" le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses…
-Replaces quotes with french quotes : Il n'est pas évident , de «régler» le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses…
-Ensures non-breaking space after opening quote : Il n'est pas évident , de « régler» le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses…
-Ensures non-breaking space after closing quote : Il n'est pas évident , de « régler » le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses…
-Removes spaces before simple punctuations : Il n'est pas évident, de « régler » le texte:en effet, les règles de ponctuation sont complexes!Ah,les ellipses…
-Ensures a space after a simple or double punctuation : Il n'est pas évident, de « régler » le texte: en effet, les règles de ponctuation sont complexes! Ah, les ellipses…
-Ensures a single non-breaking space before a double punctuation : Il n'est pas évident, de « régler » le texte : en effet, les règles de ponctuation sont complexes ! Ah, les ellipses…
-Ensures a single space after a colon or semicolon : Il n'est pas évident, de « régler » le texte : en effet, les règles de ponctuation sont complexes ! Ah, les ellipses…
-Output: Il n'est pas évident, de « régler » le texte : en effet, les règles de ponctuation sont complexes ! Ah, les ellipses…
+> m.MorrisTest.testHtmlAware();
+Replaces three dots with an ellipsis : Il n'est pas évident , de "régler" le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses… C'est la 123eme fois qu'on en parle!
+Replaces quotes with french quotes : Il n'est pas évident , de «régler» le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses… C'est la 123eme fois qu'on en parle!
+Ensures non-breaking space after opening quote : Il n'est pas évident , de « régler» le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses… C'est la 123eme fois qu'on en parle!
+Ensures non-breaking space after closing quote : Il n'est pas évident , de « régler » le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses… C'est la 123eme fois qu'on en parle!
+Removes spaces before simple punctuations : Il n'est pas évident, de « régler » le texte:en effet, les règles de ponctuation sont complexes!Ah,les ellipses… C'est la 123eme fois qu'on en parle!
+Ensures a space after a simple or double punctuation : Il n'est pas évident, de « régler » le texte: en effet, les règles de ponctuation sont complexes! Ah, les ellipses… C'est la 123eme fois qu'on en parle!
+Ensures a single non-breaking space before a double punctuation : Il n'est pas évident, de « régler » le texte : en effet, les règles de ponctuation sont complexes ! Ah, les ellipses… C'est la 123eme fois qu'on en parle !
+Ensures a single space after a colon or semicolon : Il n'est pas évident, de « régler » le texte : en effet, les règles de ponctuation sont complexes ! Ah, les ellipses… C'est la 123eme fois qu'on en parle !
+Normalizes ordinal numbers : Il n'est pas évident, de « régler » le texte : en effet, les règles de ponctuation sont complexes ! Ah, les ellipses… C'est la 123ème fois qu'on en parle !
+Uses sup elements for numbers : Il n'est pas évident, de « régler » le texte : en effet, les règles de ponctuation sont complexes ! Ah, les ellipses… C'est la 123<sup>ème</sup> fois qu'on en parle !
 ```
 
 ---

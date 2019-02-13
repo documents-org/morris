@@ -1,20 +1,20 @@
 export const LIST = {
-        ELLIPSIS: '…',
-        DOT: '.',
-        COMMA: ',',
-        PAR_O: '(',
-        PAR_C: ')',
-        BRA_O: '[',
-        BRA_C: ']',
-        COLON: ':',
-        SEMICOLON: ';',
-        QUOTE: '\'',
-        QUOTE_DOUBLE: '"',
-        INTERROGATION: '?',
-        EXCLAMATION: '!',
-        LQUOTE: '«',
-        RQUOTE: '»',
-        SPACES: {
+    ELLIPSIS: '…',
+    DOT: '.',
+    COMMA: ',',
+    PAR_O: '(',
+    PAR_C: ')',
+    BRA_O: '[',
+    BRA_C: ']',
+    COLON: ':',
+    SEMICOLON: ';',
+    QUOTE: '\'',
+    QUOTE_DOUBLE: '"',
+    INTERROGATION: '?',
+    EXCLAMATION: '!',
+    LQUOTE: '«',
+    RQUOTE: '»',
+    SPACES: {
             CHARACTER_TABULATION: '\u0009',
             LINE_FEED: '\u000A',
             LINE_TABULATION: '\u000B',
@@ -47,4 +47,4 @@ export const LIST = {
             WORD_JOINER: '\u2060',
             ZERO_WIDTH_NON_BREAKING: '\uFEFF'
         }
-    }
+}
