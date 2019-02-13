@@ -53,7 +53,17 @@ var LIST = {
     }
 };
 
-var rules = [
+var ordinalNumbersMap = {
+    'ere': 're',
+    'eres': 're',
+    'ère': 're',
+    'ères': 'res',
+    'me': 'ème',
+    'mes': 'èmes',
+    'eme': 'ème',
+    'emes': 'èmes'
+};
+var frenchPlaintextRules = [
     {
         description: 'Replaces three dots with an ellipsis',
         find: /\.{3}/gi,
@@ -105,13 +115,36 @@ var rules = [
         description: 'Ensures a single space after a colon or semicolon',
         find: /([:;])\s*/gi,
         replace: "$1" + LIST.SPACES.SPACE
+    },
+    {
+        description: 'Normalizes ordinal numbers',
+        replace: function (str) {
+            var searches = Object.keys(ordinalNumbersMap);
+            var re = new RegExp("(\\d+)(" + searches.join('|') + ")", 'gi');
+            return str.replace(re, function (_match, nums, capture) { return nums + ordinalNumbersMap[capture]; });
+        },
+    },
+];
+var frenchHtmlAwareRules = [
+    {
+        description: 'Uses sup elements for numbers',
+        find: new RegExp("(\\d+)(" + Object.values(ordinalNumbersMap).join('|') + ")", 'gi'),
+        replace: "$1<sup>$2</sup>",
     }
 ];
 
 var Morris = (function () {
-    function Morris(rules$$1) {
-        this.rules = rules$$1;
+    function Morris(rules) {
+        if (Array.isArray(rules) && rules.length > 0) {
+            if (Array.isArray(rules[0])) {
+                this.rules = rules.reduce(function (b, a) { return b.concat(a); }, []);
+            }
+            else {
+                this.rules = rules;
+            }
+        }
     }
+
     Object.defineProperty(Morris.prototype, "getRules", {
         get: function () {
             return this.rules;
@@ -119,28 +152,48 @@ var Morris = (function () {
         enumerable: true,
         configurable: true
     });
-    Morris.prototype.format = function (text) {
+  
+    Morris.prototype.format = function (text, optionalStepCallback) {
+        if (optionalStepCallback === void 0) { optionalStepCallback = function (a, b) { }; }
         return this.rules.reduce(function (str, rule) {
+            var result;
             if (typeof rule.replace === 'string') {
-                return str.replace(rule.find, rule.replace);
+                result = str.replace(rule.find, rule.replace);
             }
-            return rule.replace(str);
+            else {
+                result = rule.replace(str);
+            }
+            optionalStepCallback(rule, result);
+            return result;
         }, text);
-    };
-    Morris.test = function () {
-        var m = new Morris(rules);
-        var input = "Il n'est pas \u00E9vident , de \"r\u00E9gler\" le texte:en effet , les r\u00E8gles de ponctuation sont complexes!Ah ,les ellipses...";
-        console.log(input);
-        var output = "Il n'est pas \u00E9vident, de \u00AB\u00A0r\u00E9gler\u00A0\u00BB le texte\u00A0: en effet, les r\u00E8gles de ponctuation sont complexes\u00A0! Ah, les ellipses\u2026";
-        if (m.format(input) !== output) {
-            console.log(output);
-            throw new Error('Morris search/replace rules failed.');
-        }
-        console.log('Morris succeeded.');
     };
     return Morris;
 }());
-var index = new Morris(rules);
+var MorrisTest = (function () {
+    function MorrisTest() {
+    }
+    MorrisTest.testPlainText = function () {
+        var m = new Morris(frenchPlaintextRules);
+        var input = "Il n'est pas \u00E9vident , de \"r\u00E9gler\" le texte:en effet , les r\u00E8gles de ponctuation sont complexes!Ah ,les ellipses...";
+        var output = "Il n'est pas \u00E9vident, de \u00AB\u00A0r\u00E9gler\u00A0\u00BB le texte\u00A0: en effet, les r\u00E8gles de ponctuation sont complexes\u00A0! Ah, les ellipses\u2026";
+        var formatted = m.format(input, function (rule, ruleResult) { return console.log(rule.description + ' : ' + ruleResult); });
+        if (formatted !== output) {
+            throw new Error('Morris search/replace rules failed.');
+        }
+    };
+    MorrisTest.testHtmlAware = function () {
+        var m = new Morris([frenchPlaintextRules, frenchHtmlAwareRules]);
+        var input = "Il n'est pas \u00E9vident , de \"r\u00E9gler\" le texte:en effet , les r\u00E8gles de ponctuation sont complexes!Ah ,les ellipses... C'est la 123eme fois qu'on en parle!";
+        var output = "Il n'est pas \u00E9vident, de \u00AB\u00A0r\u00E9gler\u00A0\u00BB le texte\u00A0: en effet, les r\u00E8gles de ponctuation sont complexes\u00A0! Ah, les ellipses\u2026 C'est la 123<sup>\u00E8me</sup> fois qu'on en parle\u00A0!";
+        var formatted = m.format(input, function (rule, ruleResult) { return console.log(rule.description + ' : ' + ruleResult); });
+        if (formatted !== output) {
+            throw new Error('Morris search/replace rules failed.');
+        }
+    };
+    return MorrisTest;
+}());
+var index = new Morris(frenchPlaintextRules);
 
 exports.Morris = Morris;
+exports.MorrisTest = MorrisTest;
 exports.default = index;
