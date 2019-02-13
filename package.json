@@ -1,0 +1,21 @@
+{
+    "name": "morris",
+    "version": "0.1.0",
+    "main": "dist/index.js",
+    "repository": "https://github.com/documents-design/morris.git",
+    "author": "Regnis Olbap <singer.pablo@gmail.com>",
+    "license": "MIT",
+    "private": false,
+    "devDependencies": {
+        "rollup": "^1.1.2",
+        "rollup-plugin-alias": "^1.5.1",
+        "rollup-plugin-typescript2": "^0.19.2",
+        "tslint": "^5.11.0",
+        "tslint-config-standard": "^7.0.0",
+        "typescript": "^3.3.3"
+    },
+    "scripts": {
+        "build": "yarn rollup -c",
+        "watch": "yarn rollup -c -w"
+    }
+}

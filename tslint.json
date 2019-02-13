@@ -1,0 +1,22 @@
+{
+    "defaultSeverity": "error",
+    "extends": ["tslint-config-standard"],
+    "jsRules": {},
+    "rules": {
+        "ordered-imports": true,
+        "member-ordering": true,
+        "indent": [true, "spaces", 4],
+        "ter-indent": [
+            true,
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "space-before-function-paren": [true, 0],
+        "no-unused-variable": true
+    },
+    "linterOptions": {
+        "exclude": ["node_modules/**/*.ts", "node_modules/**/*.d.ts"]
+    }
+}
