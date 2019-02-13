@@ -144,6 +144,15 @@ var Morris = (function () {
             }
         }
     }
+
+    Object.defineProperty(Morris.prototype, "getRules", {
+        get: function () {
+            return this.rules;
+        },
+        enumerable: true,
+        configurable: true
+    });
+  
     Morris.prototype.format = function (text, optionalStepCallback) {
         if (optionalStepCallback === void 0) { optionalStepCallback = function (a, b) { }; }
         return this.rules.reduce(function (str, rule) {

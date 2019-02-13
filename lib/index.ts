@@ -13,6 +13,9 @@ export class Morris {
             }
         }
     }
+    get getRules(): RuleInterface[] {
+        return this.rules
+    }
 
     format(text: string, optionalStepCallback: (rule: RuleInterface, result: string) => void = (a, b) => {}): string {
         return this.rules.reduce((str, rule) => {
