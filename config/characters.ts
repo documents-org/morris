@@ -1,5 +1,4 @@
-export const LIST =
-    {
+export const LIST = {
         ELLIPSIS: '…',
         DOT: '.',
         COMMA: ',',
@@ -46,38 +45,6 @@ export const LIST =
             ZERO_WIDTH_NON_JOINER: '\u200C',
             ZERO_WIDTH_JOINER: '\u200D',
             WORD_JOINER: '\u2060',
-            ZERO_WIDTH_NON_BREAKING: '\uFEFF',
-        },
-    };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            ZERO_WIDTH_NON_BREAKING: '\uFEFF'
+        }
+    }
