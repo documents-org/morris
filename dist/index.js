@@ -112,6 +112,13 @@ var Morris = (function () {
     function Morris(rules$$1) {
         this.rules = rules$$1;
     }
+    Object.defineProperty(Morris.prototype, "getRules", {
+        get: function () {
+            return this.rules;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Morris.prototype.format = function (text) {
         return this.rules.reduce(function (str, rule) {
             if (typeof rule.replace === 'string') {
