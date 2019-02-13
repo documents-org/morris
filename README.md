@@ -1,6 +1,9 @@
 # Morris
 Morris is a locale-defined typographic rules fixer.
 The set of rules we're currently building is for the french language.
+It's designed to operate on raw text.
+
+Its counterpart to work in a DOM environment and add real layout rules, such as line awareness, content block size awareness, hyphenation (or avoidance of), will be found at [@documents-design/morris-dom.git](https://github.com/documents-design/morris-dom.git).
 
 ## Rules
 All rules satisfy RuleInterface.
