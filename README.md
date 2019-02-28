@@ -75,6 +75,39 @@ Uses sup elements for numbers : Il n'est pas évident, de « régler » le tex
 
 ---
 
+## Testing
+We're currently building a test infrastructure allowing to generate tests from experienced graphic designers : the table below is converted by `node gentest.js` to tests executable by Jest.
+Table parsing is done, test generation needs to be done, but it's the simplest part. Tests will guide the code, so we'll change `RuleInterface` to suit this format.
+
+![](meta/morris_table)
+
+```bash
+ node gentest.js
+[
+  {
+    "id": "1",
+    "description_fr": "Remplace trois points par le caractère points de suspension",
+    "description_en": "Replaces three dots with an ellipsis",
+    "tests": [
+      []
+    ]
+  },
+  {
+    "id": "2",
+    "description_fr": "Remplace les guillemets anglais par des guillemets français",
+    "description_en": "Replaces quotes with french quotes",
+    "tests": [
+      [
+        {
+          "type": "brut",
+          "test": "\"régler\"",
+          "resultat": "«régler»"
+        }
+      ]
+    ]
+  },
+```
+
 ## Contributing
 
 We'd accept contributions, but this project should mature a bit before. As long as modifications are lightweight and don't pull external dependencies outside of `devDependencies`, you're free to contribute. The style guide is what `node_modules/.bin/tslint --fix` produces. 
