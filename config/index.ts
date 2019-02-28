@@ -1,4 +1,1 @@
-export {
-    frenchPlaintextRules as frenchPlaintextRules,
-    frenchHtmlAwareRules as frenchHtmlAwareRules
-} from '~/config/rules'
+export { frenchRules } from "~/config/rules";

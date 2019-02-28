@@ -1,34 +1,70 @@
-import { frenchPlaintextRules } from '~/config/index'
-import { RuleInterface } from '~/lib/RuleInterface'
+import { frenchRules } from "~/config/index";
+import { RuleInterface } from "~/lib/RuleInterface";
 
 export class Morris {
-    private rules: RuleInterface[]
+    private rules: RuleInterface[];
+    private ruleMap: { [key: string]: Number };
 
     constructor(rules: RuleInterface[] | RuleInterface[][]) {
         if (Array.isArray(rules) && rules.length > 0) {
             if (Array.isArray(rules[0])) {
-                this.rules = (rules as RuleInterface[][]).reduce((b, a) => b.concat(a), [] as RuleInterface[])
+                this.rules = (rules as RuleInterface[][]).reduce(
+                    (b, a) => b.concat(a),
+                    [] as RuleInterface[]
+                );
             } else {
-                this.rules = rules as RuleInterface[]
+                this.rules = rules as RuleInterface[];
             }
         }
-    }
-    get getRules(): RuleInterface[] {
-        return this.rules
+        this.ruleMap = this.rules.reduce((map, rule) => {
+            map[rule.id.toString(10)] = Object.keys(map).length;
+            return map;
+        }, {});
     }
 
-    format(text: string, optionalStepCallback: (rule: RuleInterface, result: string) => void = (a, b) => {}): string {
-        return this.rules.reduce((str, rule) => {
-            let result
-            if (typeof rule.replace === 'string') {
-                result = str.replace(rule.find as RegExp, rule.replace)
+    get getContexts(): string[] {
+        return this.rules.reduce(
+            (acc, rule) => {
+                for (let context in rule.contexts) {
+                    if (acc.indexOf(context) === -1) acc.push(context);
+                }
+                return acc;
+            },
+            <string[]>[]
+        );
+    }
+
+    get getRules(): RuleInterface[] {
+        return this.rules;
+    }
+
+    apply(text: string, context: string = "brut", rule: Number): string {
+        const ri = this.rules[this.ruleMap[rule.toString(10)].toString(10)];
+        if (ri.contexts[context]) {
+            let r = ri.contexts[context];
+            if (typeof r.replace === "string") {
+                return text.replace(r.find as RegExp, r.replace);
             } else {
-                result = rule.replace(str)
+                return r.replace(text);
             }
-            optionalStepCallback(rule, result)
-            return result
-        }, text)
+        }
+        return text;
+    }
+
+    format(
+        text: string,
+        context: string,
+        optionalStepCallback: (rule: RuleInterface, result: string) => void = (
+            a,
+            b
+        ) => {}
+    ): string {
+        return this.rules.reduce((str, rule) => {
+            let result = this.apply(text, context, rule.id);
+            optionalStepCallback(rule, result);
+            return result;
+        }, text);
     }
 }
 
-export default new Morris(frenchPlaintextRules)
+export default new Morris(frenchRules);

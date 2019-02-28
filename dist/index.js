@@ -63,73 +63,121 @@ var ordinalNumbersMap = {
     'eme': 'ème',
     'emes': 'èmes'
 };
-var frenchPlaintextRules = [
+var frenchRules = [
     {
+        id: 1,
         description: 'Replaces three dots with an ellipsis',
-        find: /\.{3}/gi,
-        replace: "" + LIST.ELLIPSIS
-    },
-    {
-        description: 'Replaces quotes with french quotes',
-        replace: function (str) {
-            var open = false;
-            var output = '';
-            for (var _i = 0, str_1 = str; _i < str_1.length; _i++) {
-                var char = str_1[_i];
-                if (char === '"') {
-                    output += open ? LIST.RQUOTE : LIST.LQUOTE;
-                    open = !open;
-                    continue;
-                }
-                output += char;
-            }
-            return output;
-        }
-    },
-    {
-        description: 'Ensures non-breaking space after opening quote',
-        find: new RegExp(LIST.LQUOTE + "s*"),
-        replace: "" + LIST.LQUOTE + LIST.SPACES.NO_BREAK_SPACE
-    },
-    {
-        description: 'Ensures non-breaking space after closing quote',
-        find: new RegExp("s*" + LIST.RQUOTE),
-        replace: "" + LIST.SPACES.NO_BREAK_SPACE + LIST.RQUOTE
-    },
-    {
-        description: 'Removes spaces before simple punctuations',
-        find: /(\w)\s+([,\.])/gi,
-        replace: '$1$2'
-    },
-    {
-        description: 'Ensures a space after a simple or double punctuation',
-        find: /(\w[,\.:,?!])\s*(\w)/gi,
-        replace: '$1 $2'
-    },
-    {
-        description: 'Ensures a single non-breaking space before a double punctuation',
-        find: /\s*([!?:;])/gi,
-        replace: LIST.SPACES.NO_BREAK_SPACE + "$1"
-    },
-    {
-        description: 'Ensures a single space after a colon or semicolon',
-        find: /([:;])\s*/gi,
-        replace: "$1" + LIST.SPACES.SPACE
-    },
-    {
-        description: 'Normalizes ordinal numbers',
-        replace: function (str) {
-            var searches = Object.keys(ordinalNumbersMap);
-            var re = new RegExp("(\\d+)(" + searches.join('|') + ")", 'gi');
-            return str.replace(re, function (_match, nums, capture) { return nums + ordinalNumbersMap[capture]; });
+        contexts: {
+            brut: {
+                find: /\.{3}/gi,
+                replace: "" + LIST.ELLIPSIS
+            },
         },
     },
-];
-var frenchHtmlAwareRules = [
     {
-        description: 'Uses sup elements for numbers',
-        find: new RegExp("(\\d+)(" + Object.values(ordinalNumbersMap).join('|') + ")", 'gi'),
-        replace: "$1<sup>$2</sup>",
+        id: 2,
+        description: 'Replaces quotes with french quotes',
+        contexts: {
+            brut: {
+                replace: function (str) {
+                    var open = false;
+                    var output = '';
+                    for (var _i = 0, str_1 = str; _i < str_1.length; _i++) {
+                        var char = str_1[_i];
+                        if (char === '"') {
+                            output += open ? LIST.RQUOTE : LIST.LQUOTE;
+                            open = !open;
+                            continue;
+                        }
+                        output += char;
+                    }
+                    return output;
+                }
+            },
+        },
+    },
+    {
+        id: 3,
+        description: 'Ensures non-breaking space after opening quote',
+        contexts: {
+            brut: {
+                find: new RegExp(LIST.LQUOTE + "s*"),
+                replace: "" + LIST.LQUOTE + LIST.SPACES.NO_BREAK_SPACE
+            },
+        },
+    },
+    {
+        id: 4,
+        description: 'Ensures non-breaking space after closing quote',
+        contexts: {
+            brut: {
+                find: new RegExp("s*" + LIST.RQUOTE),
+                replace: "" + LIST.SPACES.NO_BREAK_SPACE + LIST.RQUOTE
+            },
+        },
+    },
+    {
+        id: 5,
+        description: 'Removes spaces before simple punctuations',
+        contexts: {
+            brut: {
+                find: /(\w)\s+([,\.])/gi,
+                replace: '$1$2'
+            },
+        },
+    },
+    {
+        id: 6,
+        description: 'Ensures a space after a simple or double punctuation',
+        contexts: {
+            brut: {
+                find: /(\w[,\.:,?!])\s*(\w)/gi,
+                replace: '$1 $2'
+            },
+        },
+    },
+    {
+        id: 7,
+        description: 'Ensures a single non-breaking space before a double punctuation',
+        contexts: {
+            brut: {
+                find: /\s*([!?:;])/gi,
+                replace: LIST.SPACES.NO_BREAK_SPACE + "$1"
+            },
+        },
+    },
+    {
+        id: 8,
+        description: 'Ensures a single space after a colon or semicolon',
+        contexts: {
+            brut: {
+                find: /([:;])\s*/gi,
+                replace: "$1" + LIST.SPACES.SPACE
+            },
+        },
+    },
+    {
+        id: 9,
+        description: 'Normalizes ordinal numbers',
+        contexts: {
+            brut: {
+                replace: function (str) {
+                    var searches = Object.keys(ordinalNumbersMap);
+                    var re = new RegExp("(\\d+)(" + searches.join('|') + ")", 'gi');
+                    return str.replace(re, function (_match, nums, capture) { return nums + ordinalNumbersMap[capture]; });
+                }
+            },
+        },
+    },
+    {
+        id: 10,
+        description: 'Exposes ordinal numbers',
+        contexts: {
+            html: {
+                find: new RegExp("(\\d+)(" + Object.values(ordinalNumbersMap).join('|') + ")", 'gi'),
+                replace: "$1<sup>$2</sup>"
+            },
+        },
     }
 ];
 
@@ -143,8 +191,24 @@ var Morris = (function () {
                 this.rules = rules;
             }
         }
+        this.ruleMap = this.rules.reduce(function (map, rule) {
+            map[rule.id.toString(10)] = Object.keys(map).length;
+            return map;
+        }, {});
     }
-
+    Object.defineProperty(Morris.prototype, "getContexts", {
+        get: function () {
+            return this.rules.reduce(function (acc, rule) {
+                for (var context in rule.contexts) {
+                    if (acc.indexOf(context) === -1)
+                        acc.push(context);
+                }
+                return acc;
+            }, []);
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Morris.prototype, "getRules", {
         get: function () {
             return this.rules;
@@ -152,48 +216,32 @@ var Morris = (function () {
         enumerable: true,
         configurable: true
     });
-  
-    Morris.prototype.format = function (text, optionalStepCallback) {
-        if (optionalStepCallback === void 0) { optionalStepCallback = function (a, b) { }; }
-        return this.rules.reduce(function (str, rule) {
-            var result;
-            if (typeof rule.replace === 'string') {
-                result = str.replace(rule.find, rule.replace);
+    Morris.prototype.apply = function (text, context, rule) {
+        if (context === void 0) { context = "brut"; }
+        var ri = this.rules[this.ruleMap[rule.toString(10)].toString(10)];
+        if (ri.contexts[context]) {
+            var r = ri.contexts[context];
+            if (typeof r.replace === "string") {
+                return text.replace(r.find, r.replace);
             }
             else {
-                result = rule.replace(str);
+                return r.replace(text);
             }
+        }
+        return text;
+    };
+    Morris.prototype.format = function (text, context, optionalStepCallback) {
+        var _this = this;
+        if (optionalStepCallback === void 0) { optionalStepCallback = function (a, b) { }; }
+        return this.rules.reduce(function (str, rule) {
+            var result = _this.apply(text, context, rule.id);
             optionalStepCallback(rule, result);
             return result;
         }, text);
     };
     return Morris;
 }());
-var MorrisTest = (function () {
-    function MorrisTest() {
-    }
-    MorrisTest.testPlainText = function () {
-        var m = new Morris(frenchPlaintextRules);
-        var input = "Il n'est pas \u00E9vident , de \"r\u00E9gler\" le texte:en effet , les r\u00E8gles de ponctuation sont complexes!Ah ,les ellipses...";
-        var output = "Il n'est pas \u00E9vident, de \u00AB\u00A0r\u00E9gler\u00A0\u00BB le texte\u00A0: en effet, les r\u00E8gles de ponctuation sont complexes\u00A0! Ah, les ellipses\u2026";
-        var formatted = m.format(input, function (rule, ruleResult) { return console.log(rule.description + ' : ' + ruleResult); });
-        if (formatted !== output) {
-            throw new Error('Morris search/replace rules failed.');
-        }
-    };
-    MorrisTest.testHtmlAware = function () {
-        var m = new Morris([frenchPlaintextRules, frenchHtmlAwareRules]);
-        var input = "Il n'est pas \u00E9vident , de \"r\u00E9gler\" le texte:en effet , les r\u00E8gles de ponctuation sont complexes!Ah ,les ellipses... C'est la 123eme fois qu'on en parle!";
-        var output = "Il n'est pas \u00E9vident, de \u00AB\u00A0r\u00E9gler\u00A0\u00BB le texte\u00A0: en effet, les r\u00E8gles de ponctuation sont complexes\u00A0! Ah, les ellipses\u2026 C'est la 123<sup>\u00E8me</sup> fois qu'on en parle\u00A0!";
-        var formatted = m.format(input, function (rule, ruleResult) { return console.log(rule.description + ' : ' + ruleResult); });
-        if (formatted !== output) {
-            throw new Error('Morris search/replace rules failed.');
-        }
-    };
-    return MorrisTest;
-}());
-var index = new Morris(frenchPlaintextRules);
+var index = new Morris(frenchRules);
 
 exports.Morris = Morris;
-exports.MorrisTest = MorrisTest;
 exports.default = index;

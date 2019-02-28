@@ -1,5 +1,12 @@
 export interface RuleInterface {
-    description?: string
-    find?: RegExp
-    replace: string | Function
+    id: Number;
+    contexts: {
+        [key: string]: RuleApplication;
+    };
+    description?: string;
+}
+
+export interface RuleApplication {
+    find?: RegExp;
+    replace: string | Function;
 }

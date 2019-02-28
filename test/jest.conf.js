@@ -1,9 +1,9 @@
-const path = require('path')
+const path = require("path");
 
 module.exports = {
-    preset: 'ts-jest',
-    rootDir: path.resolve(__dirname, '../'),
-    moduleNameMapper: {
-        '^~/(.*)$': '<rootDir>/$1'
-    }
-}
+  preset: "ts-jest",
+  rootDir: path.resolve(__dirname, "../"),
+  moduleNameMapper: {
+    "^~/(.*)$": "<rootDir>/$1"
+  }
+};
