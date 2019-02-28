@@ -1,22 +1,19 @@
 # Morris
 Morris is a locale-defined typographic rules fixer.
 The set of rules we're currently building is for the french language.
-It's designed to operate on raw text.
+It's designed to operate on raw text, and apply rules either for plaintext, environments like Adobe Indesign, Html... This property is named "context" thereafter.
 
 Its counterpart to work in a DOM environment and add real layout rules, such as line awareness, content block size awareness, hyphenation (or avoidance of), will be found at [@documents-design/morris-dom.git](https://github.com/documents-design/morris-dom.git).
 
 ## Usage
 
 ```
-const m = new Morris(); // "frenchPlaintextRules" rules are loaded by default.
-m.format("string");
+const m = new Morris(); // "frenchRules" rules are loaded by default.
+const m = new Morris(frenchRules); // equivalent
+const m = new Morris([frenchRules, otherRules]); // two sets of rules will be merged.
 
-const m = new Morris(frenchPlaintextRules); // equivalent
-m.format("string");
-
-const m = new Morris([frenchPlaintextRules, frenchHtmlAwareRules]); // two sets of rules will be merged.
-m.format("string");
-
+m.apply(inputText, context, ruleId); // applies an individual rule
+m.format(inputText, context) // applies every rule
 ```
 
 
@@ -27,9 +24,14 @@ Some rules are stateless, and just find/replace operations.
 
 ```js
 {
+    id: 1,
     description: "Replaces three dots with an ellipsis",
-    find: /\.{3}/gi,
-    replace: `${LIST.ELLIPSIS}`
+    contexts: {
+        brut: {
+            find: /\.{3}/gi,
+            replace: `${LIST.ELLIPSIS}`
+        }
+    }
 }
 ```
 
@@ -37,21 +39,25 @@ Some rules must be stateful : they don't need a `find` property.
 Their `replace` property is a function taking the whole string as an argument.  
 You're then free to iterate on it, use a parsing strategy, [...]
 
-```ts
+```typescript
 {
     description: "Replaces quotes with french quotes",
-    replace(str: string): string {
-      let open = false
-      let output = ""
-      for (const char of str) {
-          if (char === "\"") {
-              output += open ? LIST.RQUOTE : LIST.LQUOTE
-              open = !open
-              continue
-          }
-          output += char
-      }
-      return output
+    contexts: {
+        brut: {
+            replace(str: string): string {
+                  let open = false
+                  let output = ""
+                  for (const char of str) {
+                      if (char === "\"") {
+                          output += open ? LIST.RQUOTE : LIST.LQUOTE
+                          open = !open
+                          continue
+                      }
+                      output += char
+                }
+                return output
+            }
+        }
     }
 }
 ``` 
@@ -77,12 +83,10 @@ Uses sup elements for numbers : Il n'est pas évident, de « régler » le tex
 
 ## Testing
 We're currently building a test infrastructure allowing to generate tests from experienced graphic designers : the table below is converted by `node gentest.js` to tests executable by Jest.
-Table parsing is done, test generation needs to be done, but it's the simplest part. Tests will guide the code, so we'll change `RuleInterface` to suit this format.
 
 ![](meta/morris_table)
 
-```bash
- node gentest.js
+```json
 [
   {
     "id": "1",
@@ -107,7 +111,22 @@ Table parsing is done, test generation needs to be done, but it's the simplest p
     ]
   },
 ```
-
+and becomes 
+```typescript
+describe("Replaces three dots with an ellipsis", () => {});
+describe("Replaces quotes with french quotes", () => {
+    it("in the context of brut", () => {
+        const formatted = mo.apply(`"régler"`, `brut`, 2);
+        expect(formatted).toEqual(`«régler»`);
+    });
+});
+describe("Ensures non-breaking space after opening quote", () => {
+    it("in the context of brut", () => {
+        const formatted = mo.apply(`«régler»`, `brut`, 3);
+        expect(formatted).toEqual(`«\u00A0régler»`);
+    });
+});
+```
 ## Contributing
 
 We'd accept contributions, but this project should mature a bit before. As long as modifications are lightweight and don't pull external dependencies outside of `devDependencies`, you're free to contribute. The style guide is what `node_modules/.bin/tslint --fix` produces. 
