@@ -7,7 +7,7 @@ Its counterpart to work in a DOM environment and add real layout rules, such as 
 
 ## Usage
 
-```
+```js
 const m = new Morris(); // "frenchRules" rules are loaded by default.
 const m = new Morris(frenchRules); // equivalent
 const m = new Morris([frenchRules, otherRules]); // two sets of rules will be merged.
@@ -64,25 +64,12 @@ You're then free to iterate on it, use a parsing strategy, [...]
 
 ## Current implemented rules
 
-```
-> let m = require('./dist/index');
-> m.MorrisTest.testHtmlAware();
-Replaces three dots with an ellipsis : Il n'est pas évident , de "régler" le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses… C'est la 123eme fois qu'on en parle!
-Replaces quotes with french quotes : Il n'est pas évident , de «régler» le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses… C'est la 123eme fois qu'on en parle!
-Ensures non-breaking space after opening quote : Il n'est pas évident , de « régler» le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses… C'est la 123eme fois qu'on en parle!
-Ensures non-breaking space after closing quote : Il n'est pas évident , de « régler » le texte:en effet , les règles de ponctuation sont complexes!Ah ,les ellipses… C'est la 123eme fois qu'on en parle!
-Removes spaces before simple punctuations : Il n'est pas évident, de « régler » le texte:en effet, les règles de ponctuation sont complexes!Ah,les ellipses… C'est la 123eme fois qu'on en parle!
-Ensures a space after a simple or double punctuation : Il n'est pas évident, de « régler » le texte: en effet, les règles de ponctuation sont complexes! Ah, les ellipses… C'est la 123eme fois qu'on en parle!
-Ensures a single non-breaking space before a double punctuation : Il n'est pas évident, de « régler » le texte : en effet, les règles de ponctuation sont complexes ! Ah, les ellipses… C'est la 123eme fois qu'on en parle !
-Ensures a single space after a colon or semicolon : Il n'est pas évident, de « régler » le texte : en effet, les règles de ponctuation sont complexes ! Ah, les ellipses… C'est la 123eme fois qu'on en parle !
-Normalizes ordinal numbers : Il n'est pas évident, de « régler » le texte : en effet, les règles de ponctuation sont complexes ! Ah, les ellipses… C'est la 123ème fois qu'on en parle !
-Uses sup elements for numbers : Il n'est pas évident, de « régler » le texte : en effet, les règles de ponctuation sont complexes ! Ah, les ellipses… C'est la 123<sup>ème</sup> fois qu'on en parle !
-```
+See this Google Sheet : https://docs.google.com/spreadsheets/d/e/2PACX-1vSHDGzcEMT3FkEvMxCl8PyqqadIad4_CI0QyXZvywU_Hz499cvt-zE29oMV7FvPfSVeyK2jAeMD7OUg/pubhtml?gid=0&single=true
 
 ---
 
 ## Testing
-We're currently building a test infrastructure allowing to generate tests from experienced graphic designers : the table below is converted by `node gentest.js` to tests executable by Jest.
+We're currently using a test infrastructure that allows our graphic designers to write the tests : the table below is converted by `node gentest.js` to tests that Jest can run.
 
 ![](meta/morris_table)
 
@@ -109,7 +96,8 @@ We're currently building a test infrastructure allowing to generate tests from e
         }
       ]
     ]
-  },
+  }
+]
 ```
 and becomes 
 ```typescript
