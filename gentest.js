@@ -153,9 +153,16 @@ const writeTestFile = testString =>
     });
   });
 
+const log = thing =>
+  new Promise((resolve, reject) => {
+    console.log(thing);
+    resolve(thing);
+  });
+
 getSpreadsheetData()
   .then(parseSpreadsheetData)
   .then(constructSpreadsheetLines)
   .then(spreadsheetLinesToRules)
+  .then(log)
   .then(renderToTs)
   .then(writeTestFile);

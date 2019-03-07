@@ -1,8 +1,8 @@
 const genContext = (rule, test) => `it('in the context of ${test.type}', () => {
-        const formatted = mo.apply(\`${test.test}\`, \`${test.type}\`, ${
+        const formatted = mo.apply(\`${test.test.trim()}\`, \`${test.type}\`, ${
   rule.id
 });
-        expect(formatted).toEqual(\`${test.resultat}\`);
+        expect(formatted).toEqual(\`${test.resultat.trim()}\`);
   });`;
 
 const genRule = rule => `describe('${rule.description_en}', () => {
