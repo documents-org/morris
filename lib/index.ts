@@ -60,7 +60,7 @@ export class Morris {
         ) => {}
     ): string {
         return this.rules.reduce((str, rule) => {
-            let result = this.apply(text, context, rule.id);
+            let result = this.apply(str, context, rule.id);
             optionalStepCallback(rule, result);
             return result;
         }, text);
