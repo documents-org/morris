@@ -121,8 +121,8 @@ const spreadsheetLinesToRules = lines =>
             tests: extractTestsFromLine(line, types)
           });
         } else if (tests.length > 0) {
-          tests[tests.length - 1].tests.concat(
-            extractTestsFromLine(line, types)
+          tests[tests.length - 1].tests.push(
+            ...extractTestsFromLine(line, types)
           );
         }
         return tests;
