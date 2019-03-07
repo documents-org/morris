@@ -246,7 +246,7 @@ export const frenchRules: RuleInterface[] = [
         description: "Ensures a space after a simple or double punctuation",
         contexts: {
             brut: {
-                find: /(\w[,.:?!])\s*(\w)/gi,
+                find: /([,.:?!])\s*(\w)/gi,
                 replace: "$1 $2"
             }
         }
