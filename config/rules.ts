@@ -118,16 +118,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 8,
-        description: "Ensures a space after a simple or double punctuation",
-        contexts: {
-            brut: {
-                find: /(\w[,\.:,?!])\s*(\w)/gi,
-                replace: "$1 $2"
-            }
-        }
-    },
-    {
         id: 9,
         description:
             "Ensures a single narrow non-breaking space before a double punctuation",
@@ -250,5 +240,15 @@ export const frenchRules: RuleInterface[] = [
                 replace: `${LIST.SPACES.NO_BREAK_SPACE}$1`
             }
         }
-    }
+    },
+    {
+        id: 8,
+        description: "Ensures a space after a simple or double punctuation",
+        contexts: {
+            brut: {
+                find: /(\w[,.:?!])\s*(\w)/gi,
+                replace: "$1 $2"
+            }
+        }
+    },
 ];
