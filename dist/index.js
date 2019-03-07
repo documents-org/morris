@@ -333,13 +333,11 @@ var Morris = (function () {
         }
         return text;
     };
-    Morris.prototype.format = function (text, context, optionalStepCallback) {
+    Morris.prototype.format = function (text, context) {
         var _this = this;
-        if (optionalStepCallback === void 0) { optionalStepCallback = function (a, b) { }; }
+        if (context === void 0) { context = "brut"; }
         return this.rules.reduce(function (str, rule) {
-            var result = _this.apply(text, context, rule.id);
-            optionalStepCallback(rule, result);
-            return result;
+            return _this.apply(str, context, rule.id);
         }, text);
     };
     return Morris;

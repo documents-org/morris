@@ -51,18 +51,9 @@ export class Morris {
         return text;
     }
 
-    format(
-        text: string,
-        context: string,
-        optionalStepCallback: (rule: RuleInterface, result: string) => void = (
-            a,
-            b
-        ) => {}
-    ): string {
+    format(text: string, context: string = "brut"): string {
         return this.rules.reduce((str, rule) => {
-            let result = this.apply(str, context, rule.id);
-            optionalStepCallback(rule, result);
-            return result;
+            return this.apply(str, context, rule.id);
         }, text);
     }
 }
