@@ -277,7 +277,7 @@ var frenchRules = [
         description: "Ensures a space after a simple or double punctuation",
         contexts: {
             brut: {
-                find: /([,.:?!])\s*(\S)/gi,
+                find: /([,.:;?!])\s*(\S)/gi,
                 replace: "$1 $2"
             }
         }
