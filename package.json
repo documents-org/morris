@@ -1,6 +1,6 @@
 {
     "name": "morris",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "main": "dist/index.js",
     "repository": "https://github.com/documents-design/morris.git",
     "author": "Regnis Olbap <singer.pablo@gmail.com>",
