@@ -344,7 +344,7 @@ var Morris = (function () {
     };
     return Morris;
 }());
-var index = new Morris(frenchRules);
+var instance = new Morris(frenchRules);
 
 exports.Morris = Morris;
-exports.default = index;
+exports.default = instance;

@@ -67,4 +67,5 @@ export class Morris {
     }
 }
 
-export default new Morris(frenchRules);
+const instance = new Morris(frenchRules);
+export default instance;
