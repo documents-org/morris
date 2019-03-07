@@ -223,7 +223,7 @@ var frenchRules = [
         description: "Exposes ordinal numbers",
         contexts: {
             html: {
-                find: new RegExp("(\\d+)(" + ordinalNumbersSorted.join("|") + ")", "gi"),
+                find: new RegExp("(\\d+)(" + ordinalNumbersSorted.join("|") + ")", "g"),
                 replace: "$1<sup>$2</sup>"
             }
         }
@@ -233,7 +233,7 @@ var frenchRules = [
         description: "Normalizes titles (Mr, Mme)...",
         contexts: {
             html: {
-                find: new RegExp("M(r|me)([^w])", "gi"),
+                find: new RegExp("M(r|me)([^w])", "g"),
                 replace: "M<sup>$1</sup>$2"
             }
         }
@@ -243,11 +243,11 @@ var frenchRules = [
         description: "Rewrites centuries",
         contexts: {
             html: {
-                find: /([CMVXI]+)\w+\s/gi,
+                find: /([CMVXI]+)\w+\s/g,
                 replace: "$1<sup>e</sup> "
             },
             brut: {
-                find: /([CMVXI]+)\w+\s/gi,
+                find: /([CMVXI]+)\w+\s/g,
                 replace: "$1e "
             }
         }

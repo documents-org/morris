@@ -189,7 +189,7 @@ export const frenchRules: RuleInterface[] = [
             html: {
                 find: new RegExp(
                     `(\\d+)(${ordinalNumbersSorted.join("|")})`,
-                    "gi"
+                    "g"
                 ),
                 replace: `$1<sup>$2</sup>`
             }
@@ -200,7 +200,7 @@ export const frenchRules: RuleInterface[] = [
         description: "Normalizes titles (Mr, Mme)...",
         contexts: {
             html: {
-                find: new RegExp("M(r|me)([^w])", "gi"),
+                find: new RegExp("M(r|me)([^w])", "g"),
                 replace: `M<sup>$1</sup>$2`
             }
         }
@@ -210,11 +210,11 @@ export const frenchRules: RuleInterface[] = [
         description: "Rewrites centuries",
         contexts: {
             html: {
-                find: /([CMVXI]+)\w+\s/gi,
+                find: /([CMVXI]+)\w+\s/g,
                 replace: `$1<sup>e</sup> `
             },
             brut: {
-                find: /([CMVXI]+)\w+\s/gi,
+                find: /([CMVXI]+)\w+\s/g,
                 replace: `$1e `
             }
         }
