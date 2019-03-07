@@ -51,9 +51,11 @@ export class Morris {
         return text;
     }
 
-    format(text: string, context: string = "brut"): string {
+    format(text: string, context: string = "brut", callback = (text: string) => {}): string {
         return this.rules.reduce((str, rule) => {
-            return this.apply(str, context, rule.id);
+            const result = this.apply(str, context, rule.id);
+            callback(result);
+            return result;
         }, text);
     }
 }
