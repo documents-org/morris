@@ -112,7 +112,7 @@ export const frenchRules: RuleInterface[] = [
         description: "Removes spaces before simple punctuations",
         contexts: {
             brut: {
-                find: /(\w)\s+([(,.!?\-)])/gi,
+                find: /(\w)\s+([,.!?\-)])/gi,
                 replace: "$1$2"
             }
         }
@@ -200,11 +200,11 @@ export const frenchRules: RuleInterface[] = [
         description: "Rewrites centuries",
         contexts: {
             html: {
-                find: /([CMVXI]+)[è\w]+/g,
+                find: /([CMVXI]+)(eme|ème)+/g,
                 replace: `$1<sup>e</sup>`
             },
             brut: {
-                find: /([CMVXI]+)[è\w]+\s/g,
+                find: /([CMVXI]+)(eme|ème)+\s/g,
                 replace: `$1e `
             }
         }
