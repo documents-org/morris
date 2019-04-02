@@ -58,6 +58,14 @@ export class Morris {
             return result
         }, text)
     }
+
+    async asyncFormat(text: string, context: string = 'brut', callback = async (text: string) => {}): Promise<string> {
+        return this.rules.reduce(async (str, rule) => {
+            const result = this.apply(await str, context, rule.id)
+            await callback(result)
+            return result
+        }, Promise.resolve(text))
+    }
 }
 
 const instance = new Morris(frenchRules)

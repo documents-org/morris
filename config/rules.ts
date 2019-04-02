@@ -33,7 +33,6 @@ const ordinalNumbersSorted = Object.values(ordinalNumbersMapPlural)
 
 export const frenchRules: RuleInterface[] = [
     {
-        id: 0,
         description: 'Replaces every type of space with a standard space',
         contexts: {
             brut: {
@@ -43,7 +42,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 1,
         description: 'Replaces three dots with an ellipsis',
         contexts: {
             brut: {
@@ -53,7 +51,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 2,
         description: 'Replaces quotes with french quotes',
         contexts: {
             brut: {
@@ -74,7 +71,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 3,
         description: 'Replaces smart quotes with french quotes',
         contexts: {
             brut: {
@@ -96,7 +92,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 4,
         description: 'Ensures non-breaking space after opening quote',
         contexts: {
             brut: {
@@ -106,7 +101,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 5,
         description: 'Ensures non-breaking space after closing quote',
         contexts: {
             brut: {
@@ -116,7 +110,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 6,
         description: 'Replaces multiple spaces in a row with a single one',
         contexts: {
             brut: {
@@ -126,7 +119,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 7,
         description: 'Removes spaces before simple punctuations',
         contexts: {
             brut: {
@@ -136,7 +128,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 8,
         description: 'Removes spaces after simple punctuations',
         contexts: {
             brut: {
@@ -146,28 +137,25 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 9,
         description: 'Ensures a space after a simple or double punctuation',
         contexts: {
             brut: {
-                find: /([,.:;?!])\s*(\S)/gi,
+                find: /([,.:;)\]}?!])\s*(\S)/gi,
                 replace: '$1 $2'
             }
         }
     },
     {
-        id: 10,
         description:
             'Ensures a single narrow non-breaking space before a double punctuation',
         contexts: {
             brut: {
-                find: /\s*([!?:;])/gi,
-                replace: `${LIST.SPACES.NARROW_NO_BREAK_SPACE}$1`
+                find: /\s*([!?({\]:;])/gi,
+                replace: `${LIST.SPACES.THIN_SPACE}$1`
             }
         }
     },
     {
-        id: 11,
         description: 'Normalizes singular ordinal numbers',
         contexts: {
             brut: {
@@ -189,7 +177,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 12,
         description: 'Normalizes plural ordinal numbers',
         contexts: {
             brut: {
@@ -211,7 +198,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 13,
         description: 'Exposes ordinal numbers',
         contexts: {
             html: {
@@ -224,7 +210,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 14,
         description: 'Normalizes titles (Mr, Mme)...',
         contexts: {
             html: {
@@ -234,7 +219,6 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 15,
         description: 'Rewrites centuries',
         contexts: {
             html: {
@@ -248,40 +232,73 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        id: 16,
-        description:
-            'Glues words less than three letters to the word after them',
+        description: 'Glues numbers to the word after them',
+        contexts: {
+            brut: {
+                find: /(\d+)\s(\S)/gi,
+                replace: `$1${LIST.SPACES.NO_BREAK_SPACE}$2`
+            }
+        }
+    },
+    {
+        description: 'Packs numbers by 3 above 10^4',
         contexts: {
             brut: {
                 replace(text: string): string {
+                    const find = /(\d{5,18})/g
+                    const replace = (a: string, match: string): string => {
+                        const m: Array<Array<string>> = match.split('')
+                          .reverse()
+                          .reduce((acc, num: string) => {
+                              if (acc.length === 0) {
+                                  acc.push([])
+                              }
+                              if (acc[acc.length - 1].length < 3) {
+                                  acc[acc.length - 1].push(num)
+                              } else {
+                                  acc.push([num])
+                              }
+                              return acc
+                          }, [] as Array<Array<string>>)
+                        return m.map(a => a.reverse().join(''))
+                            .reverse()
+                          .join('.')
+                    }
+                    return text.replace(find, replace)
+                }
+            }
+        }
+    },
+    {
+     description:
+    'Glues words less than three letters to the word after them',
+    contexts: {
+        brut: {
+            replace(text: string): string {
                     return text.split(' ')
                         .reduce((out, word) => {
                             if (word.length < 4) return `${out}${word}${LIST.SPACES.NO_BREAK_SPACE}`
                             return `${out}${word} `
                         }, '')
                 }
-            }
-        }
-    },
-    {
-        id: 17,
-        description:
-            'Glues capitalized words (acronyms) to the word before them',
-        contexts: {
-            brut: {
-                find: /\s+([A-Z]{1,3})(\s)/g,
-                replace: `${LIST.SPACES.NO_BREAK_SPACE}$1$2`
-            }
-        }
-    },
-    {
-        id: 18,
-        description: 'Glues lonely words with the word before them',
-        contexts: {
-            brut: {
-                find: /\s+(\S+)$/gi,
-                replace: `${LIST.SPACES.NO_BREAK_SPACE}$1`
-            }
         }
     }
-]
+}, {
+description:
+            'Glues capitalized words (acronyms) to the word before them',
+        contexts: {
+    brut: {
+        find: /\s+([A-Z]{1,3})(\s)/g,
+                replace: `${LIST.SPACES.NO_BREAK_SPACE}$1$2`
+    }
+}
+}, {
+description: 'Glues lonely words with the word before them',
+        contexts: {
+    brut: {
+        find: /\s+(\S+)$/gi,
+                replace: `${LIST.SPACES.NO_BREAK_SPACE}$1`
+    }
+}
+}
+].map((a, index) => ({ ...a, id: index }) as RuleInterface)

@@ -2,6 +2,69 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
 var LIST = {
     ELLIPSIS: '…',
     DOT: '.',
@@ -20,6 +83,7 @@ var LIST = {
     RQUOTE: '»',
     APOSTROPHE: '’',
     SMART_QUOTES: '“',
+    NO_BREAK_HYPHEN: '\u2011',
     SPACES: {
         CHARACTER_TABULATION: '\u0009',
         LINE_FEED: '\u000A',
@@ -83,7 +147,6 @@ var ordinalNumbersSorted = Object.values(ordinalNumbersMapPlural)
     .sort(function (b, a) { return (b.length < a.length ? 1 : -1); });
 var frenchRules = [
     {
-        id: 0,
         description: 'Replaces every type of space with a standard space',
         contexts: {
             brut: {
@@ -93,7 +156,6 @@ var frenchRules = [
         }
     },
     {
-        id: 1,
         description: 'Replaces three dots with an ellipsis',
         contexts: {
             brut: {
@@ -103,7 +165,6 @@ var frenchRules = [
         }
     },
     {
-        id: 2,
         description: 'Replaces quotes with french quotes',
         contexts: {
             brut: {
@@ -125,7 +186,6 @@ var frenchRules = [
         }
     },
     {
-        id: 3,
         description: 'Replaces smart quotes with french quotes',
         contexts: {
             brut: {
@@ -149,7 +209,6 @@ var frenchRules = [
         }
     },
     {
-        id: 4,
         description: 'Ensures non-breaking space after opening quote',
         contexts: {
             brut: {
@@ -159,7 +218,6 @@ var frenchRules = [
         }
     },
     {
-        id: 5,
         description: 'Ensures non-breaking space after closing quote',
         contexts: {
             brut: {
@@ -169,7 +227,6 @@ var frenchRules = [
         }
     },
     {
-        id: 6,
         description: 'Replaces multiple spaces in a row with a single one',
         contexts: {
             brut: {
@@ -179,7 +236,6 @@ var frenchRules = [
         }
     },
     {
-        id: 7,
         description: 'Removes spaces before simple punctuations',
         contexts: {
             brut: {
@@ -189,7 +245,6 @@ var frenchRules = [
         }
     },
     {
-        id: 8,
         description: 'Removes spaces after simple punctuations',
         contexts: {
             brut: {
@@ -199,27 +254,24 @@ var frenchRules = [
         }
     },
     {
-        id: 9,
         description: 'Ensures a space after a simple or double punctuation',
         contexts: {
             brut: {
-                find: /([,.:;?!])\s*(\S)/gi,
+                find: /([,.:;)\]}?!])\s*(\S)/gi,
                 replace: '$1 $2'
             }
         }
     },
     {
-        id: 10,
         description: 'Ensures a single narrow non-breaking space before a double punctuation',
         contexts: {
             brut: {
-                find: /\s*([!?:;])/gi,
-                replace: LIST.SPACES.NARROW_NO_BREAK_SPACE + "$1"
+                find: /\s*([!?({\]:;])/gi,
+                replace: LIST.SPACES.THIN_SPACE + "$1"
             }
         }
     },
     {
-        id: 11,
         description: 'Normalizes singular ordinal numbers',
         contexts: {
             brut: {
@@ -234,7 +286,6 @@ var frenchRules = [
         }
     },
     {
-        id: 12,
         description: 'Normalizes plural ordinal numbers',
         contexts: {
             brut: {
@@ -249,7 +300,6 @@ var frenchRules = [
         }
     },
     {
-        id: 13,
         description: 'Exposes ordinal numbers',
         contexts: {
             html: {
@@ -259,7 +309,6 @@ var frenchRules = [
         }
     },
     {
-        id: 14,
         description: 'Normalizes titles (Mr, Mme)...',
         contexts: {
             html: {
@@ -269,7 +318,6 @@ var frenchRules = [
         }
     },
     {
-        id: 15,
         description: 'Rewrites centuries',
         contexts: {
             html: {
@@ -283,12 +331,51 @@ var frenchRules = [
         }
     },
     {
-        id: 16,
+        description: 'Glues numbers to the word after them',
+        contexts: {
+            brut: {
+                find: /(\d+)\s(\S)/gi,
+                replace: "$1" + LIST.SPACES.NO_BREAK_SPACE + "$2"
+            }
+        }
+    },
+    {
+        description: 'Packs numbers by 3 above 10^4',
+        contexts: {
+            brut: {
+                replace: function (text) {
+                    var find = /(\d{5,18})/g;
+                    var replace = function (a, match) {
+                        var m = match.split('')
+                            .reverse()
+                            .reduce(function (acc, num) {
+                            if (acc.length === 0) {
+                                acc.push([]);
+                            }
+                            if (acc[acc.length - 1].length < 3) {
+                                acc[acc.length - 1].push(num);
+                            }
+                            else {
+                                acc.push([num]);
+                            }
+                            return acc;
+                        }, []);
+                        return m.map(function (a) { return a.reverse().join(''); })
+                            .reverse()
+                            .join('.');
+                    };
+                    return text.replace(find, replace);
+                }
+            }
+        }
+    },
+    {
         description: 'Glues words less than three letters to the word after them',
         contexts: {
             brut: {
                 replace: function (text) {
-                    return text.split(' ').reduce(function (out, word) {
+                    return text.split(' ')
+                        .reduce(function (out, word) {
                         if (word.length < 4)
                             return "" + out + word + LIST.SPACES.NO_BREAK_SPACE;
                         return "" + out + word + " ";
@@ -296,9 +383,7 @@ var frenchRules = [
                 }
             }
         }
-    },
-    {
-        id: 17,
+    }, {
         description: 'Glues capitalized words (acronyms) to the word before them',
         contexts: {
             brut: {
@@ -306,9 +391,7 @@ var frenchRules = [
                 replace: LIST.SPACES.NO_BREAK_SPACE + "$1$2"
             }
         }
-    },
-    {
-        id: 18,
+    }, {
         description: 'Glues lonely words with the word before them',
         contexts: {
             brut: {
@@ -317,7 +400,7 @@ var frenchRules = [
             }
         }
     }
-];
+].map(function (a, index) { return (__assign({}, a, { id: index })); });
 
 var Morris = (function () {
     function Morris(rules) {
@@ -377,6 +460,34 @@ var Morris = (function () {
             callback(result);
             return result;
         }, text);
+    };
+    Morris.prototype.asyncFormat = function (text, context, callback) {
+        var _this = this;
+        if (context === void 0) { context = 'brut'; }
+        if (callback === void 0) { callback = function (text) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2];
+        }); }); }; }
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2, this.rules.reduce(function (str, rule) { return __awaiter(_this, void 0, void 0, function () {
+                        var result, _a;
+                        return __generator(this, function (_b) {
+                            switch (_b.label) {
+                                case 0:
+                                    _a = this.apply;
+                                    return [4, str];
+                                case 1:
+                                    result = _a.apply(this, [_b.sent(), context, rule.id]);
+                                    return [4, callback(result)];
+                                case 2:
+                                    _b.sent();
+                                    return [2, result];
+                            }
+                        });
+                    }); }, Promise.resolve(text))];
+            });
+        });
     };
     return Morris;
 }());
