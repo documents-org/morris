@@ -287,8 +287,13 @@ var frenchRules = [
         description: 'Glues words less than three letters to the word after them',
         contexts: {
             brut: {
-                find: /([ \u00A0])([\S]{1,3})\s/gi,
-                replace: "$1$2" + LIST.SPACES.NO_BREAK_SPACE
+                replace: function (text) {
+                    return text.split(' ').reduce(function (out, word) {
+                        if (word.length < 4)
+                            return "" + out + word + LIST.SPACES.NO_BREAK_SPACE;
+                        return "" + out + word + " ";
+                    }, '');
+                }
             }
         }
     },
