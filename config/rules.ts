@@ -288,5 +288,13 @@ export const frenchRules: RuleInterface[] = [
                 replace: `${LIST.SPACES.NO_BREAK_SPACE}$1`
             }
         }
+    }, {
+        description: 'Replaces dashes inside words with non-break dashes',
+        contexts: {
+            brut: {
+                find: /(\w)-(\w)/gi,
+                replace: `$1${LIST.NO_BREAK_HYPHEN}$2`
+            }
+        }
     }
 ].map((a, index) => ({ ...a, id: index }) as RuleInterface)
