@@ -18,6 +18,8 @@ var LIST = {
     EXCLAMATION: '!',
     LQUOTE: '«',
     RQUOTE: '»',
+    APOSTROPHE: '’',
+    SMART_QUOTES: '“',
     SPACES: {
         CHARACTER_TABULATION: '\u0009',
         LINE_FEED: '\u000A',
@@ -54,24 +56,42 @@ var LIST = {
 };
 
 var ordinalNumbersMapSingular = {
+    er: 'er',
     ere: 're',
     ère: 're',
     me: 'e',
     eme: 'e',
-    ème: 'e'
+    ieme: 'e',
+    ième: 'e',
+    ème: 'e',
+    nd: 'nd'
 };
 var ordinalNumbersMapPlural = {
+    ers: 'ers',
     eres: 're',
     ères: 'res',
     mes: 'es',
     emes: 'es',
-    èmes: 'es'
+    iemes: 'e',
+    ièmes: 'e',
+    èmes: 'es',
+    nds: 'nds'
 };
 var ordinalNumbersSorted = Object.values(ordinalNumbersMapPlural)
     .concat(Object.values(ordinalNumbersMapSingular))
     .reduce(function (b, a) { return b.concat(b.indexOf(a) === -1 ? [a] : []); }, [])
     .sort(function (b, a) { return (b.length < a.length ? 1 : -1); });
 var frenchRules = [
+    {
+        id: 0,
+        description: 'Replaces every type of space with a standard space',
+        contexts: {
+            brut: {
+                find: new RegExp("[" + LIST.SPACES.NARROW_NO_BREAK_SPACE + LIST.SPACES.NO_BREAK_SPACE + LIST.SPACES.THIN_SPACE + "]", 'gi'),
+                replace: "" + LIST.SPACES.SPACE
+            }
+        }
+    },
     {
         id: 1,
         description: 'Replaces three dots with an ellipsis',
@@ -163,13 +183,33 @@ var frenchRules = [
         description: 'Removes spaces before simple punctuations',
         contexts: {
             brut: {
-                find: /(\w)\s+([,.!?\-)])/gi,
+                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
+                replace: '$1$2'
+            }
+        }
+    },
+    {
+        id: 8,
+        description: 'Removes spaces after simple punctuations',
+        contexts: {
+            brut: {
+                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
                 replace: '$1$2'
             }
         }
     },
     {
         id: 9,
+        description: 'Ensures a space after a simple or double punctuation',
+        contexts: {
+            brut: {
+                find: /([,.:;?!])\s*(\S)/gi,
+                replace: '$1 $2'
+            }
+        }
+    },
+    {
+        id: 10,
         description: 'Ensures a single narrow non-breaking space before a double punctuation',
         contexts: {
             brut: {
@@ -179,7 +219,7 @@ var frenchRules = [
         }
     },
     {
-        id: 10,
+        id: 11,
         description: 'Normalizes singular ordinal numbers',
         contexts: {
             brut: {
@@ -194,7 +234,7 @@ var frenchRules = [
         }
     },
     {
-        id: 11,
+        id: 12,
         description: 'Normalizes plural ordinal numbers',
         contexts: {
             brut: {
@@ -209,7 +249,7 @@ var frenchRules = [
         }
     },
     {
-        id: 12,
+        id: 13,
         description: 'Exposes ordinal numbers',
         contexts: {
             html: {
@@ -219,7 +259,7 @@ var frenchRules = [
         }
     },
     {
-        id: 13,
+        id: 14,
         description: 'Normalizes titles (Mr, Mme)...',
         contexts: {
             html: {
@@ -229,31 +269,31 @@ var frenchRules = [
         }
     },
     {
-        id: 14,
+        id: 15,
         description: 'Rewrites centuries',
         contexts: {
             html: {
-                find: /([CMVXI]+)(eme|ème)+/g,
+                find: /(\s[CMVXI]+)(eme|ème)+/g,
                 replace: "$1<sup>e</sup>"
             },
             brut: {
-                find: /([CMVXI]+)(eme|ème)+\s/g,
+                find: /(\s[CMVXI]+)(eme|ème)+\s/g,
                 replace: "$1e "
             }
         }
     },
     {
-        id: 15,
+        id: 16,
         description: 'Glues words less than three letters to the word after them',
         contexts: {
             brut: {
-                find: /\s([\S]{1,3})\s/gi,
+                find: /([\S]{1,3})\s/gi,
                 replace: " $1" + LIST.SPACES.NO_BREAK_SPACE
             }
         }
     },
     {
-        id: 16,
+        id: 17,
         description: 'Glues capitalized words (acronyms) to the word before them',
         contexts: {
             brut: {
@@ -263,22 +303,12 @@ var frenchRules = [
         }
     },
     {
-        id: 17,
+        id: 18,
         description: 'Glues lonely words with the word before them',
         contexts: {
             brut: {
                 find: /\s+(\S+)$/gi,
                 replace: LIST.SPACES.NO_BREAK_SPACE + "$1"
-            }
-        }
-    },
-    {
-        id: 8,
-        description: 'Ensures a space after a simple or double punctuation',
-        contexts: {
-            brut: {
-                find: /([,.:;?!])\s*(\S)/gi,
-                replace: '$1 $2'
             }
         }
     }

@@ -14,6 +14,8 @@ export const LIST = {
     EXCLAMATION: '!',
     LQUOTE: '«',
     RQUOTE: '»',
+    APOSTROPHE: '’',
+    SMART_QUOTES: '“',
     SPACES: {
         CHARACTER_TABULATION: '\u0009',
         LINE_FEED: '\u000A',
