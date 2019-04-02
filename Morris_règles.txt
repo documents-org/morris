@@ -1,0 +1,32 @@
+Sauts de ligne :
+Tout type de retour à la ligne (CR, LF, CRLF, [...]) devient CR.
+Tout nombre de retour chariot devient un seul retour chariot.
+Tout retour chariot devient une espace mot.
+
+Espaces :
+Tout type d'espace devient une espace mot.
+Tout nombre d'espaces devient une seule espace.
+
+Ponctuation et symboles +-*= < > >= <= % $ € £ %o \ / {} [] () § # ° :
+Aucune espace avant les ponctuations (simples & doubles)
+Aucune espace après les ponctuations (simples & doubles)
+Insertion des bonnes espaces avant et après les ponctuations
+
+Gestion des nombres : grouper par 3 par la droite et séparer par une fine insécable
+Insérer entre un nombre et le nom suivant une espace insécable.
+Insérer entre un nom de mois et l'année le suivant une espace insécable
+
+#0 Traiter les corrections courantes : nombres ordinaux, dénominations, [...]
+  M. Mme Mlle MM. Mmes Mlles Dr Me(Maître) Cie St Ste Sts Stes, 1er, 2nd, 2e, 1ères
+
+Coupures :
+Insérer entre les abbréviations (cf.#0) et le nom [toute lettre] qui les suit une insécable. 
+Etc. est toujours précédé d'une insécable
+Dans un mot, remplacer les tirets par des tirets insécables
+
+Un mot de trois lettres ou moins se colle au suivant.
+Le premier mot d'une phrase / parenthèse / entre accolades / entre crochets,
+s'il fait moins de six lettres, se colle au suivant.
+
+Les pronoms et "mots courts" déterminés dans une liste se collent au mot suivant.
+	
