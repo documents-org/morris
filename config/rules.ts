@@ -253,7 +253,7 @@ export const frenchRules: RuleInterface[] = [
             'Glues words less than three letters to the word after them',
         contexts: {
             brut: {
-                find: /([\S]{1,3})\s/gi,
+                find: /[ \u00A0]([\S]{1,3})\s/gi,
                 replace: ` $1${LIST.SPACES.NO_BREAK_SPACE}`
             }
         }
