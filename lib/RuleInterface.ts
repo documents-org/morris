@@ -1,12 +1,12 @@
 export interface RuleInterface {
-    id: Number;
+    id: Number
     contexts: {
         [key: string]: RuleApplication;
-    };
-    description?: string;
+    }
+    description?: string
 }
 
 export interface RuleApplication {
-    find?: RegExp;
-    replace: string | Function;
+    find?: RegExp
+    replace: string | Function
 }

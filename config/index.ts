@@ -1,1 +1,1 @@
-export { frenchRules } from "~/config/rules";
+export { frenchRules } from '~/config/rules'

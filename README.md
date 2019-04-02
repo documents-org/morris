@@ -69,9 +69,9 @@ See this Google Sheet : https://docs.google.com/spreadsheets/d/e/2PACX-1vSHDGzcE
 ---
 
 ## Testing
-We're currently using a test infrastructure that allows our graphic designers to write the tests : the table below is converted by `node gentest.js` to tests that Jest can run.
+We're currently using a test infrastructure that allows graphic designers to write the tests : the table below is converted by `node gentest.js` to tests that Jest can run.
 
-![](meta/morris_table)
+![](meta/morris_table.png)
 
 ```json
 [
