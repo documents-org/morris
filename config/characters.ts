@@ -16,6 +16,7 @@ export const LIST = {
     RQUOTE: '»',
     APOSTROPHE: '’',
     SMART_QUOTES: '“',
+    NO_BREAK_HYPHEN: '\u2011',
     SPACES: {
         CHARACTER_TABULATION: '\u0009',
         LINE_FEED: '\u000A',
