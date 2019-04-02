@@ -118,6 +118,7 @@ var LIST = {
         ZERO_WIDTH_NON_BREAKING: '\uFEFF'
     }
 };
+//# sourceMappingURL=characters.js.map
 
 var ordinalNumbersMapSingular = {
     er: 'er',
@@ -150,8 +151,17 @@ var frenchRules = [
         description: 'Replaces every type of space with a standard space',
         contexts: {
             brut: {
-                find: new RegExp("[" + LIST.SPACES.NARROW_NO_BREAK_SPACE + LIST.SPACES.NO_BREAK_SPACE + LIST.SPACES.THIN_SPACE + "]", 'gi'),
+                find: /\s/gi,
                 replace: "" + LIST.SPACES.SPACE
+            }
+        }
+    },
+    {
+        description: 'Replaces multiple spaces in a row with a single one',
+        contexts: {
+            brut: {
+                find: /\s+/gi,
+                replace: LIST.SPACES.SPACE
             }
         }
     },
@@ -161,6 +171,33 @@ var frenchRules = [
             brut: {
                 find: /\.{3}/gi,
                 replace: "" + LIST.ELLIPSIS
+            }
+        }
+    },
+    {
+        description: 'Replaces any quote with dumb quotes',
+        contexts: {
+            brut: {
+                find: /["“”«»]/gi,
+                replace: '"'
+            }
+        }
+    },
+    {
+        description: 'Removes spaces before simple punctuations',
+        contexts: {
+            brut: {
+                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
+                replace: '$1$2'
+            }
+        }
+    },
+    {
+        description: 'Removes spaces after simple punctuations',
+        contexts: {
+            brut: {
+                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
+                replace: '$1$2'
             }
         }
     },
@@ -186,33 +223,10 @@ var frenchRules = [
         }
     },
     {
-        description: 'Replaces smart quotes with french quotes',
-        contexts: {
-            brut: {
-                replace: function (str) {
-                    var output = '';
-                    for (var _i = 0, str_2 = str; _i < str_2.length; _i++) {
-                        var char = str_2[_i];
-                        if (char === '“') {
-                            output += LIST.LQUOTE;
-                            continue;
-                        }
-                        else if (char === '”') {
-                            output += LIST.RQUOTE;
-                            continue;
-                        }
-                        output += char;
-                    }
-                    return output;
-                }
-            }
-        }
-    },
-    {
         description: 'Ensures non-breaking space after opening quote',
         contexts: {
             brut: {
-                find: new RegExp(LIST.LQUOTE + "s*", 'gi'),
+                find: /«\s*/gi,
                 replace: "" + LIST.LQUOTE + LIST.SPACES.NO_BREAK_SPACE
             }
         }
@@ -221,35 +235,8 @@ var frenchRules = [
         description: 'Ensures non-breaking space after closing quote',
         contexts: {
             brut: {
-                find: new RegExp("s*" + LIST.RQUOTE, 'gi'),
+                find: /\s*»/gi,
                 replace: "" + LIST.SPACES.NO_BREAK_SPACE + LIST.RQUOTE
-            }
-        }
-    },
-    {
-        description: 'Replaces multiple spaces in a row with a single one',
-        contexts: {
-            brut: {
-                find: new RegExp(" +", 'gi'),
-                replace: LIST.SPACES.SPACE
-            }
-        }
-    },
-    {
-        description: 'Removes spaces before simple punctuations',
-        contexts: {
-            brut: {
-                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
-                replace: '$1$2'
-            }
-        }
-    },
-    {
-        description: 'Removes spaces after simple punctuations',
-        contexts: {
-            brut: {
-                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
-                replace: '$1$2'
             }
         }
     },
@@ -257,7 +244,7 @@ var frenchRules = [
         description: 'Ensures a space after a simple or double punctuation',
         contexts: {
             brut: {
-                find: /([,.:;)\]}?!])\s*(\S)/gi,
+                find: /([,.:;)\]}»?!])\s*(\S)/gi,
                 replace: '$1 $2'
             }
         }
@@ -266,7 +253,7 @@ var frenchRules = [
         description: 'Ensures a single narrow non-breaking space before a double punctuation',
         contexts: {
             brut: {
-                find: /\s*([!?({\]:;])/gi,
+                find: /\s*([!?({\]«:;])/gi,
                 replace: LIST.SPACES.THIN_SPACE + "$1"
             }
         }
@@ -325,8 +312,8 @@ var frenchRules = [
                 replace: "$1<sup>e</sup>"
             },
             brut: {
-                find: /(\s[CMVXI]+)(eme|ème)+\s/g,
-                replace: "$1e "
+                find: /(\s[CMVXI]+)(eme|ème)+/g,
+                replace: '$1e'
             }
         }
     },
@@ -362,7 +349,7 @@ var frenchRules = [
                         }, []);
                         return m.map(function (a) { return a.reverse().join(''); })
                             .reverse()
-                            .join('.');
+                            .join(LIST.SPACES.NARROW_NO_BREAK_SPACE);
                     };
                     return text.replace(find, replace);
                 }
@@ -387,7 +374,7 @@ var frenchRules = [
         description: 'Glues capitalized words (acronyms) to the word before them',
         contexts: {
             brut: {
-                find: /\s+([A-Z]{1,3})(\s)/g,
+                find: /\s+([A-Z]{1,6})(\s)/g,
                 replace: LIST.SPACES.NO_BREAK_SPACE + "$1$2"
             }
         }
@@ -401,6 +388,8 @@ var frenchRules = [
         }
     }
 ].map(function (a, index) { return (__assign({}, a, { id: index })); });
+
+//# sourceMappingURL=index.js.map
 
 var Morris = (function () {
     function Morris(rules) {
@@ -438,7 +427,6 @@ var Morris = (function () {
         configurable: true
     });
     Morris.prototype.apply = function (text, context, rule) {
-        if (context === void 0) { context = 'brut'; }
         var ri = this.rules[this.ruleMap[rule.toString(10)].toString(10)];
         if (ri.contexts[context]) {
             var r = ri.contexts[context];
@@ -492,6 +480,7 @@ var Morris = (function () {
     return Morris;
 }());
 var instance = new Morris(frenchRules);
+//# sourceMappingURL=index.js.map
 
 exports.Morris = Morris;
 exports.default = instance;

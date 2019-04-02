@@ -38,7 +38,7 @@ export class Morris {
         return this.rules
     }
 
-    apply(text: string, context: string = 'brut', rule: Number): string {
+    apply(text: string, context: string, rule: Number): string {
         const ri = this.rules[this.ruleMap[rule.toString(10)].toString(10)]
         if (ri.contexts[context]) {
             let r = ri.contexts[context]

@@ -36,8 +36,17 @@ export const frenchRules: RuleInterface[] = [
         description: 'Replaces every type of space with a standard space',
         contexts: {
             brut: {
-                find: new RegExp(`[${LIST.SPACES.NARROW_NO_BREAK_SPACE}${LIST.SPACES.NO_BREAK_SPACE}${LIST.SPACES.THIN_SPACE}]`, 'gi'),
+                find: /\s/gi,
                 replace: `${LIST.SPACES.SPACE}`
+            }
+        }
+    },
+    {
+        description: 'Replaces multiple spaces in a row with a single one',
+        contexts: {
+            brut: {
+                find: /\s+/gi,
+                replace: LIST.SPACES.SPACE
             }
         }
     },
@@ -47,6 +56,33 @@ export const frenchRules: RuleInterface[] = [
             brut: {
                 find: /\.{3}/gi,
                 replace: `${LIST.ELLIPSIS}`
+            }
+        }
+    },
+    {
+        description: 'Replaces any quote with dumb quotes',
+        contexts: {
+            brut: {
+                find: /["“”«»]/gi,
+                replace: '"'
+            }
+        }
+    },
+    {
+        description: 'Removes spaces before simple punctuations',
+        contexts: {
+            brut: {
+                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
+                replace: '$1$2'
+            }
+        }
+    },
+    {
+        description: 'Removes spaces after simple punctuations',
+        contexts: {
+            brut: {
+                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
+                replace: '$1$2'
             }
         }
     },
@@ -71,31 +107,10 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-        description: 'Replaces smart quotes with french quotes',
-        contexts: {
-            brut: {
-                replace(str: string): string {
-                    let output = ''
-                    for (const char of str) {
-                        if (char === '“') {
-                            output += LIST.LQUOTE
-                            continue
-                        } else if (char === '”') {
-                            output += LIST.RQUOTE
-                            continue
-                        }
-                        output += char
-                    }
-                    return output
-                }
-            }
-        }
-    },
-    {
         description: 'Ensures non-breaking space after opening quote',
         contexts: {
             brut: {
-                find: new RegExp(`${LIST.LQUOTE}\s*`, 'gi'),
+                find: /«\s*/gi,
                 replace: `${LIST.LQUOTE}${LIST.SPACES.NO_BREAK_SPACE}`
             }
         }
@@ -104,35 +119,8 @@ export const frenchRules: RuleInterface[] = [
         description: 'Ensures non-breaking space after closing quote',
         contexts: {
             brut: {
-                find: new RegExp(`\s*${LIST.RQUOTE}`, 'gi'),
+                find: /\s*»/gi,
                 replace: `${LIST.SPACES.NO_BREAK_SPACE}${LIST.RQUOTE}`
-            }
-        }
-    },
-    {
-        description: 'Replaces multiple spaces in a row with a single one',
-        contexts: {
-            brut: {
-                find: new RegExp(` +`, 'gi'),
-                replace: LIST.SPACES.SPACE
-            }
-        }
-    },
-    {
-        description: 'Removes spaces before simple punctuations',
-        contexts: {
-            brut: {
-                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
-                replace: '$1$2'
-            }
-        }
-    },
-    {
-        description: 'Removes spaces after simple punctuations',
-        contexts: {
-            brut: {
-                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
-                replace: '$1$2'
             }
         }
     },
@@ -140,7 +128,7 @@ export const frenchRules: RuleInterface[] = [
         description: 'Ensures a space after a simple or double punctuation',
         contexts: {
             brut: {
-                find: /([,.:;)\]}?!])\s*(\S)/gi,
+                find: /([,.:;)\]}»?!])\s*(\S)/gi,
                 replace: '$1 $2'
             }
         }
@@ -150,7 +138,7 @@ export const frenchRules: RuleInterface[] = [
             'Ensures a single narrow non-breaking space before a double punctuation',
         contexts: {
             brut: {
-                find: /\s*([!?({\]:;])/gi,
+                find: /\s*([!?({\]«:;])/gi,
                 replace: `${LIST.SPACES.THIN_SPACE}$1`
             }
         }
@@ -226,8 +214,8 @@ export const frenchRules: RuleInterface[] = [
                 replace: `$1<sup>e</sup>`
             },
             brut: {
-                find: /(\s[CMVXI]+)(eme|ème)+\s/g,
-                replace: `$1e `
+                find: /(\s[CMVXI]+)(eme|ème)+/g,
+                replace: '$1e'
             }
         }
     },
@@ -248,21 +236,21 @@ export const frenchRules: RuleInterface[] = [
                     const find = /(\d{5,18})/g
                     const replace = (a: string, match: string): string => {
                         const m: Array<Array<string>> = match.split('')
-                          .reverse()
-                          .reduce((acc, num: string) => {
-                              if (acc.length === 0) {
-                                  acc.push([])
-                              }
-                              if (acc[acc.length - 1].length < 3) {
-                                  acc[acc.length - 1].push(num)
-                              } else {
-                                  acc.push([num])
-                              }
-                              return acc
-                          }, [] as Array<Array<string>>)
+                            .reverse()
+                            .reduce((acc, num: string) => {
+                                if (acc.length === 0) {
+                                    acc.push([])
+                                }
+                                if (acc[acc.length - 1].length < 3) {
+                                    acc[acc.length - 1].push(num)
+                                } else {
+                                    acc.push([num])
+                                }
+                                return acc
+                            }, [] as Array<Array<string>>)
                         return m.map(a => a.reverse().join(''))
                             .reverse()
-                          .join('.')
+                            .join(LIST.SPACES.NARROW_NO_BREAK_SPACE)
                     }
                     return text.replace(find, replace)
                 }
@@ -270,35 +258,35 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
-     description:
-    'Glues words less than three letters to the word after them',
-    contexts: {
-        brut: {
-            replace(text: string): string {
+        description:
+            'Glues words less than three letters to the word after them',
+        contexts: {
+            brut: {
+                replace(text: string): string {
                     return text.split(' ')
                         .reduce((out, word) => {
                             if (word.length < 4) return `${out}${word}${LIST.SPACES.NO_BREAK_SPACE}`
                             return `${out}${word} `
                         }, '')
                 }
+            }
         }
-    }
-}, {
-description:
+    }, {
+        description:
             'Glues capitalized words (acronyms) to the word before them',
         contexts: {
-    brut: {
-        find: /\s+([A-Z]{1,3})(\s)/g,
+            brut: {
+                find: /\s+([A-Z]{1,6})(\s)/g,
                 replace: `${LIST.SPACES.NO_BREAK_SPACE}$1$2`
-    }
-}
-}, {
-description: 'Glues lonely words with the word before them',
+            }
+        }
+    }, {
+        description: 'Glues lonely words with the word before them',
         contexts: {
-    brut: {
-        find: /\s+(\S+)$/gi,
+            brut: {
+                find: /\s+(\S+)$/gi,
                 replace: `${LIST.SPACES.NO_BREAK_SPACE}$1`
+            }
+        }
     }
-}
-}
 ].map((a, index) => ({ ...a, id: index }) as RuleInterface)
