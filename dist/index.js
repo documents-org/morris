@@ -3,69 +3,69 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var LIST = {
-    ELLIPSIS: "…",
-    DOT: ".",
-    COMMA: ",",
-    PAR_O: "(",
-    PAR_C: ")",
-    BRA_O: "[",
-    BRA_C: "]",
-    COLON: ":",
-    SEMICOLON: ";",
+    ELLIPSIS: '…',
+    DOT: '.',
+    COMMA: ',',
+    PAR_O: '(',
+    PAR_C: ')',
+    BRA_O: '[',
+    BRA_C: ']',
+    COLON: ':',
+    SEMICOLON: ';',
     QUOTE: "'",
     QUOTE_DOUBLE: '"',
-    INTERROGATION: "?",
-    EXCLAMATION: "!",
-    LQUOTE: "«",
-    RQUOTE: "»",
+    INTERROGATION: '?',
+    EXCLAMATION: '!',
+    LQUOTE: '«',
+    RQUOTE: '»',
     SPACES: {
-        CHARACTER_TABULATION: "\u0009",
-        LINE_FEED: "\u000A",
-        LINE_TABULATION: "\u000B",
-        FORM_FEED: "\u000C",
-        CARRIAGE_RETURN: "\u000D",
-        SPACE: "\u0020",
-        NEXT_LINE: "\u0085",
-        NO_BREAK_SPACE: "\u00A0",
-        OGHAM_SPACE_MARK: "\u1680",
-        EN_QUAD: "\u2000",
-        EM_QUAD: "\u2001",
-        EN_SPACE: "\u2002",
-        EM_SPACE: "\u2003",
-        THREE_PER_EM_SPACE: "\u2004",
-        FOUR_PER_EM_SPACE: "\u2005",
-        SIX_PER_EM_SPACE: "\u2006",
-        FIGURE_SPACE: "\u2007",
-        PUNCTUATION_SPACE: "\u2008",
-        THIN_SPACE: "\u2009",
-        HAIR_SPACE: "\u200A",
-        LINE_SEPARATOR: "\u2028",
-        PARAGRAPH_SEPARATOR: "\u2029",
-        NARROW_NO_BREAK_SPACE: "\u202F",
-        MEDIUM_MATHEMATICAL_SPACE: "\u205F",
-        IDEOGRAPHIC_SPACE: "\u3000",
-        MONGOLIAN_VOWEL_SEPARATOR: "\u180E",
-        ZERO_WIDTH_SPACE: "\u200B",
-        ZERO_WIDTH_NON_JOINER: "\u200C",
-        ZERO_WIDTH_JOINER: "\u200D",
-        WORD_JOINER: "\u2060",
-        ZERO_WIDTH_NON_BREAKING: "\uFEFF"
+        CHARACTER_TABULATION: '\u0009',
+        LINE_FEED: '\u000A',
+        LINE_TABULATION: '\u000B',
+        FORM_FEED: '\u000C',
+        CARRIAGE_RETURN: '\u000D',
+        SPACE: '\u0020',
+        NEXT_LINE: '\u0085',
+        NO_BREAK_SPACE: '\u00A0',
+        OGHAM_SPACE_MARK: '\u1680',
+        EN_QUAD: '\u2000',
+        EM_QUAD: '\u2001',
+        EN_SPACE: '\u2002',
+        EM_SPACE: '\u2003',
+        THREE_PER_EM_SPACE: '\u2004',
+        FOUR_PER_EM_SPACE: '\u2005',
+        SIX_PER_EM_SPACE: '\u2006',
+        FIGURE_SPACE: '\u2007',
+        PUNCTUATION_SPACE: '\u2008',
+        THIN_SPACE: '\u2009',
+        HAIR_SPACE: '\u200A',
+        LINE_SEPARATOR: '\u2028',
+        PARAGRAPH_SEPARATOR: '\u2029',
+        NARROW_NO_BREAK_SPACE: '\u202F',
+        MEDIUM_MATHEMATICAL_SPACE: '\u205F',
+        IDEOGRAPHIC_SPACE: '\u3000',
+        MONGOLIAN_VOWEL_SEPARATOR: '\u180E',
+        ZERO_WIDTH_SPACE: '\u200B',
+        ZERO_WIDTH_NON_JOINER: '\u200C',
+        ZERO_WIDTH_JOINER: '\u200D',
+        WORD_JOINER: '\u2060',
+        ZERO_WIDTH_NON_BREAKING: '\uFEFF'
     }
 };
 
 var ordinalNumbersMapSingular = {
-    ere: "re",
-    ère: "re",
-    me: "e",
-    eme: "e",
-    ème: "e"
+    ere: 're',
+    ère: 're',
+    me: 'e',
+    eme: 'e',
+    ème: 'e'
 };
 var ordinalNumbersMapPlural = {
-    eres: "re",
-    ères: "res",
-    mes: "es",
-    emes: "es",
-    èmes: "es"
+    eres: 're',
+    ères: 'res',
+    mes: 'es',
+    emes: 'es',
+    èmes: 'es'
 };
 var ordinalNumbersSorted = Object.values(ordinalNumbersMapPlural)
     .concat(Object.values(ordinalNumbersMapSingular))
@@ -74,7 +74,7 @@ var ordinalNumbersSorted = Object.values(ordinalNumbersMapPlural)
 var frenchRules = [
     {
         id: 1,
-        description: "Replaces three dots with an ellipsis",
+        description: 'Replaces three dots with an ellipsis',
         contexts: {
             brut: {
                 find: /\.{3}/gi,
@@ -84,12 +84,12 @@ var frenchRules = [
     },
     {
         id: 2,
-        description: "Replaces quotes with french quotes",
+        description: 'Replaces quotes with french quotes',
         contexts: {
             brut: {
                 replace: function (str) {
                     var open = false;
-                    var output = "";
+                    var output = '';
                     for (var _i = 0, str_1 = str; _i < str_1.length; _i++) {
                         var char = str_1[_i];
                         if (char === '"') {
@@ -106,18 +106,18 @@ var frenchRules = [
     },
     {
         id: 3,
-        description: "Replaces smart quotes with french quotes",
+        description: 'Replaces smart quotes with french quotes',
         contexts: {
             brut: {
                 replace: function (str) {
-                    var output = "";
+                    var output = '';
                     for (var _i = 0, str_2 = str; _i < str_2.length; _i++) {
                         var char = str_2[_i];
-                        if (char === "“") {
+                        if (char === '“') {
                             output += LIST.LQUOTE;
                             continue;
                         }
-                        else if (char === "”") {
+                        else if (char === '”') {
                             output += LIST.RQUOTE;
                             continue;
                         }
@@ -130,47 +130,47 @@ var frenchRules = [
     },
     {
         id: 4,
-        description: "Ensures non-breaking space after opening quote",
+        description: 'Ensures non-breaking space after opening quote',
         contexts: {
             brut: {
-                find: new RegExp(LIST.LQUOTE + "s*", "gi"),
+                find: new RegExp(LIST.LQUOTE + "s*", 'gi'),
                 replace: "" + LIST.LQUOTE + LIST.SPACES.NO_BREAK_SPACE
             }
         }
     },
     {
         id: 5,
-        description: "Ensures non-breaking space after closing quote",
+        description: 'Ensures non-breaking space after closing quote',
         contexts: {
             brut: {
-                find: new RegExp("s*" + LIST.RQUOTE, "gi"),
+                find: new RegExp("s*" + LIST.RQUOTE, 'gi'),
                 replace: "" + LIST.SPACES.NO_BREAK_SPACE + LIST.RQUOTE
             }
         }
     },
     {
         id: 6,
-        description: "Replaces multiple spaces in a row with a single one",
+        description: 'Replaces multiple spaces in a row with a single one',
         contexts: {
             brut: {
-                find: new RegExp(" +", "gi"),
+                find: new RegExp(" +", 'gi'),
                 replace: LIST.SPACES.SPACE
             }
         }
     },
     {
         id: 7,
-        description: "Removes spaces before simple punctuations",
+        description: 'Removes spaces before simple punctuations',
         contexts: {
             brut: {
                 find: /(\w)\s+([,.!?\-)])/gi,
-                replace: "$1$2"
+                replace: '$1$2'
             }
         }
     },
     {
         id: 9,
-        description: "Ensures a single narrow non-breaking space before a double punctuation",
+        description: 'Ensures a single narrow non-breaking space before a double punctuation',
         contexts: {
             brut: {
                 find: /\s*([!?:;])/gi,
@@ -180,12 +180,12 @@ var frenchRules = [
     },
     {
         id: 10,
-        description: "Normalizes singular ordinal numbers",
+        description: 'Normalizes singular ordinal numbers',
         contexts: {
             brut: {
                 replace: function (str) {
                     var searches = Object.keys(ordinalNumbersMapSingular);
-                    var re = new RegExp("(\\d+)(" + searches.join("|") + ")", "gi");
+                    var re = new RegExp("(\\d+)(" + searches.join('|') + ")", 'gi');
                     return str.replace(re, function (_match, nums, capture) {
                         return nums + ordinalNumbersMapSingular[capture];
                     });
@@ -195,12 +195,12 @@ var frenchRules = [
     },
     {
         id: 11,
-        description: "Normalizes plural ordinal numbers",
+        description: 'Normalizes plural ordinal numbers',
         contexts: {
             brut: {
                 replace: function (str) {
                     var searches = Object.keys(ordinalNumbersMapPlural);
-                    var re = new RegExp("(\\d+)(" + searches.join("|") + ")", "gi");
+                    var re = new RegExp("(\\d+)(" + searches.join('|') + ")", 'gi');
                     return str.replace(re, function (_match, nums, capture) {
                         return nums + ordinalNumbersMapPlural[capture];
                     });
@@ -210,27 +210,27 @@ var frenchRules = [
     },
     {
         id: 12,
-        description: "Exposes ordinal numbers",
+        description: 'Exposes ordinal numbers',
         contexts: {
             html: {
-                find: new RegExp("(\\d+)(" + ordinalNumbersSorted.join("|") + ")", "g"),
+                find: new RegExp("(\\d+)(" + ordinalNumbersSorted.join('|') + ")", 'g'),
                 replace: "$1<sup>$2</sup>"
             }
         }
     },
     {
         id: 13,
-        description: "Normalizes titles (Mr, Mme)...",
+        description: 'Normalizes titles (Mr, Mme)...',
         contexts: {
             html: {
-                find: new RegExp("M(r|me)([^w])", "g"),
+                find: new RegExp('M(r|me)([^w])', 'g'),
                 replace: "M<sup>$1</sup>$2"
             }
         }
     },
     {
         id: 14,
-        description: "Rewrites centuries",
+        description: 'Rewrites centuries',
         contexts: {
             html: {
                 find: /([CMVXI]+)(eme|ème)+/g,
@@ -244,7 +244,7 @@ var frenchRules = [
     },
     {
         id: 15,
-        description: "Glues words less than three letters to the word after them",
+        description: 'Glues words less than three letters to the word after them',
         contexts: {
             brut: {
                 find: /\s([\S]{1,3})\s/gi,
@@ -254,7 +254,7 @@ var frenchRules = [
     },
     {
         id: 16,
-        description: "Glues capitalized words (acronyms) to the word before them",
+        description: 'Glues capitalized words (acronyms) to the word before them',
         contexts: {
             brut: {
                 find: /\s+([A-Z]{1,3})(\s)/g,
@@ -264,7 +264,7 @@ var frenchRules = [
     },
     {
         id: 17,
-        description: "Glues lonely words with the word before them",
+        description: 'Glues lonely words with the word before them',
         contexts: {
             brut: {
                 find: /\s+(\S+)$/gi,
@@ -274,14 +274,14 @@ var frenchRules = [
     },
     {
         id: 8,
-        description: "Ensures a space after a simple or double punctuation",
+        description: 'Ensures a space after a simple or double punctuation',
         contexts: {
             brut: {
                 find: /([,.:;?!])\s*(\S)/gi,
-                replace: "$1 $2"
+                replace: '$1 $2'
             }
         }
-    },
+    }
 ];
 
 var Morris = (function () {
@@ -320,11 +320,11 @@ var Morris = (function () {
         configurable: true
     });
     Morris.prototype.apply = function (text, context, rule) {
-        if (context === void 0) { context = "brut"; }
+        if (context === void 0) { context = 'brut'; }
         var ri = this.rules[this.ruleMap[rule.toString(10)].toString(10)];
         if (ri.contexts[context]) {
             var r = ri.contexts[context];
-            if (typeof r.replace === "string") {
+            if (typeof r.replace === 'string') {
                 return text.replace(r.find, r.replace);
             }
             else {
@@ -335,7 +335,7 @@ var Morris = (function () {
     };
     Morris.prototype.format = function (text, context, callback) {
         var _this = this;
-        if (context === void 0) { context = "brut"; }
+        if (context === void 0) { context = 'brut'; }
         if (callback === void 0) { callback = function (text) { }; }
         return this.rules.reduce(function (str, rule) {
             var result = _this.apply(str, context, rule.id);

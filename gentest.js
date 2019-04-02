@@ -163,6 +163,5 @@ getSpreadsheetData()
   .then(parseSpreadsheetData)
   .then(constructSpreadsheetLines)
   .then(spreadsheetLinesToRules)
-  .then(log)
   .then(renderToTs)
   .then(writeTestFile);

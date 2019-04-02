@@ -153,3 +153,12 @@ temps`, `brut`, 17);
         expect(formatted).toEqual(`le souvenir du beau\u00A0temps`);
   });
 });
+
+describe('morris', () => {
+it('formats a whole text correctly', () => {
+    const formatted = mo.format(`bonjour!
+`, 'brut');
+    expect(formatted).toEqual(`bonjour !
+`);
+});
+});
