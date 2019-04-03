@@ -33,6 +33,7 @@ const ordinalNumbersSorted = Object.values(ordinalNumbersMapPlural)
 
 export const frenchRules: RuleInterface[] = [
     {
+        id: 0,
         description: 'Trims the input string',
         contexts: {
             brut: {
@@ -43,6 +44,7 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
+        id: 1,
         description: 'Replaces every type of space with a standard space',
         contexts: {
             brut: {
@@ -51,6 +53,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 2,
         description: 'Replaces multiple spaces in a row with a single one',
         contexts: {
             brut: {
@@ -59,6 +62,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 3,
         description: 'Replaces three dots with an ellipsis',
         contexts: {
             brut: {
@@ -67,7 +71,8 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
-        description: 'Replaces any quote with dumb quotes',
+        id: 4,
+        description: 'Replaces any double quote with dumb quotes',
         contexts: {
             brut: {
                 find: /["“”«»]/gi,
@@ -75,6 +80,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 5,
         description: 'Removes spaces before simple punctuations and symbols',
         contexts: {
             brut: {
@@ -83,6 +89,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 6,
         description: 'Removes spaces after simple punctuations and symbols',
         contexts: {
             brut: {
@@ -91,6 +98,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 7,
         description: 'Replaces quotes with french quotes',
         contexts: {
             brut: {
@@ -110,6 +118,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 8,
         description: 'Inserts space before some punctuations & symbols',
         contexts: {
             brut: {
@@ -118,6 +127,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 9,
         description: 'Inserts nbsp before some punctuations & symbols',
         contexts: {
             brut: {
@@ -126,6 +136,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 10,
         description: 'Inserts thin-nbsp before some punctuations & symbols',
         contexts: {
             brut: {
@@ -134,6 +145,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 11,
         description: 'Inserts space after some punctuations & symbols',
         contexts: {
             brut: {
@@ -142,6 +154,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 12,
         description: 'Inserts nbsp after some punctuations & symbols',
         contexts: {
             brut: {
@@ -150,6 +163,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 13,
         description: 'Normalizes singular ordinal numbers',
         contexts: {
             brut: {
@@ -170,6 +184,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 14,
         description: 'Normalizes plural ordinal numbers',
         contexts: {
             brut: {
@@ -190,6 +205,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 15,
         description: 'Exposes ordinal numbers',
         contexts: {
             html: {
@@ -201,6 +217,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 16,
         description: 'Normalizes titles (Mr, Mme)...',
         contexts: {
             html: {
@@ -209,6 +226,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 17,
         description: 'Rewrites centuries',
         contexts: {
             html: {
@@ -221,6 +239,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 18,
         description: 'Glues numbers to the word after them',
         contexts: {
             brut: {
@@ -229,6 +248,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 19,
         description: 'Packs numbers by 3 above 10^4',
         contexts: {
             brut: {
@@ -258,6 +278,7 @@ export const frenchRules: RuleInterface[] = [
         }
     },
     {
+        id: 20,
         description:
             'Glues words less than three letters to the word after them',
         contexts: {
@@ -272,14 +293,16 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     },  {
+        id: 21,
         description: 'Replaces spaces after pronouns with nbsps',
         contexts: {
             brut: {
-                find: /(dans|d(?:[’'])une?|sous|celles?|ce(?:tte)?|celui|ceux|nous|pour|avec|vous|-ci) /gi,
+                find: /(dans|d(?:[’'])une?|sous|celles?|ce(?:tte)?|celui|ceux|nous|pour|avec|vous|-ci)\s/gi,
                 replace: `$1${LIST.SPACES.NO_BREAK_SPACE}`
             }
         }
     }, {
+        id: 22,
         description:
             'Glues capitalized words (acronyms) to the word before them',
         contexts: {
@@ -289,6 +312,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 23,
         description: 'Glues lonely words with the word before them',
         contexts: {
             brut: {
@@ -297,6 +321,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 24,
         description: 'Replaces dashes inside words with non-break dashes',
         contexts: {
             brut: {
@@ -305,14 +330,16 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
+        id: 25,
         description: 'Avoids holes in numbers',
         contexts: {
             brut: {
                 find: /(\d+)\.\s(\d+)/gi,
                 replace: '$1.$2'
-            },
-        },
+            }
+        }
     },{
+        id: 24,
         description: 'Replaces unit exponents with correct exponents',
         contexts: {
             brut: {
@@ -321,15 +348,24 @@ export const frenchRules: RuleInterface[] = [
                     const s = {
                         m2: 'm²',
                         m3: 'm³'
-                    };
+                    }
                     const replace = (_: string, m: string) => {
-                        const a = s[m];
+                        const a = s[m]
                         if (typeof a !== 'undefined') return a as string
                         return m
                     }
-                    return str.replace(find, replace);
+                    return str.replace(find, replace)
                 }
             }
         }
+    }, {
+        id: 25,
+        description: 'Avoids chaining symbol-space-symbol',
+        contexts: {
+            brut: {
+                find: /([\])}])\s([.!?])/gi,
+                replace: '$1$2'
+            }
+        }
     }
-].map((a, index) => ({ ...a, id: index }) as RuleInterface)
+];

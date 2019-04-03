@@ -17,17 +17,6 @@ See the Apache Version 2.0 License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
 
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
 function __awaiter(thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -148,6 +137,7 @@ var ordinalNumbersSorted = Object.values(ordinalNumbersMapPlural)
     .sort(function (b, a) { return (b.length < a.length ? 1 : -1); });
 var frenchRules = [
     {
+        id: 0,
         description: 'Trims the input string',
         contexts: {
             brut: {
@@ -158,6 +148,7 @@ var frenchRules = [
         }
     },
     {
+        id: 1,
         description: 'Replaces every type of space with a standard space',
         contexts: {
             brut: {
@@ -166,6 +157,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 2,
         description: 'Replaces multiple spaces in a row with a single one',
         contexts: {
             brut: {
@@ -174,6 +166,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 3,
         description: 'Replaces three dots with an ellipsis',
         contexts: {
             brut: {
@@ -182,7 +175,8 @@ var frenchRules = [
             }
         }
     }, {
-        description: 'Replaces any quote with dumb quotes',
+        id: 4,
+        description: 'Replaces any double quote with dumb quotes',
         contexts: {
             brut: {
                 find: /["“”«»]/gi,
@@ -190,6 +184,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 5,
         description: 'Removes spaces before simple punctuations and symbols',
         contexts: {
             brut: {
@@ -198,6 +193,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 6,
         description: 'Removes spaces after simple punctuations and symbols',
         contexts: {
             brut: {
@@ -206,6 +202,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 7,
         description: 'Replaces quotes with french quotes',
         contexts: {
             brut: {
@@ -226,6 +223,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 8,
         description: 'Inserts space before some punctuations & symbols',
         contexts: {
             brut: {
@@ -234,6 +232,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 9,
         description: 'Inserts nbsp before some punctuations & symbols',
         contexts: {
             brut: {
@@ -242,6 +241,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 10,
         description: 'Inserts thin-nbsp before some punctuations & symbols',
         contexts: {
             brut: {
@@ -250,6 +250,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 11,
         description: 'Inserts space after some punctuations & symbols',
         contexts: {
             brut: {
@@ -258,6 +259,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 12,
         description: 'Inserts nbsp after some punctuations & symbols',
         contexts: {
             brut: {
@@ -266,6 +268,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 13,
         description: 'Normalizes singular ordinal numbers',
         contexts: {
             brut: {
@@ -279,6 +282,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 14,
         description: 'Normalizes plural ordinal numbers',
         contexts: {
             brut: {
@@ -292,6 +296,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 15,
         description: 'Exposes ordinal numbers',
         contexts: {
             html: {
@@ -300,6 +305,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 16,
         description: 'Normalizes titles (Mr, Mme)...',
         contexts: {
             html: {
@@ -308,6 +314,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 17,
         description: 'Rewrites centuries',
         contexts: {
             html: {
@@ -320,6 +327,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 18,
         description: 'Glues numbers to the word after them',
         contexts: {
             brut: {
@@ -328,6 +336,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 19,
         description: 'Packs numbers by 3 above 10^4',
         contexts: {
             brut: {
@@ -358,6 +367,7 @@ var frenchRules = [
         }
     },
     {
+        id: 20,
         description: 'Glues words less than three letters to the word after them',
         contexts: {
             brut: {
@@ -372,14 +382,16 @@ var frenchRules = [
             }
         }
     }, {
+        id: 21,
         description: 'Replaces spaces after pronouns with nbsps',
         contexts: {
             brut: {
-                find: /(dans|d(?:[’'])une?|sous|celles?|ce(?:tte)?|celui|ceux|nous|pour|avec|vous|-ci) /gi,
+                find: /(dans|d(?:[’'])une?|sous|celles?|ce(?:tte)?|celui|ceux|nous|pour|avec|vous|-ci)\s/gi,
                 replace: "$1" + LIST.SPACES.NO_BREAK_SPACE
             }
         }
     }, {
+        id: 22,
         description: 'Glues capitalized words (acronyms) to the word before them',
         contexts: {
             brut: {
@@ -388,6 +400,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 23,
         description: 'Glues lonely words with the word before them',
         contexts: {
             brut: {
@@ -396,6 +409,7 @@ var frenchRules = [
             }
         }
     }, {
+        id: 24,
         description: 'Replaces dashes inside words with non-break dashes',
         contexts: {
             brut: {
@@ -404,14 +418,16 @@ var frenchRules = [
             }
         }
     }, {
+        id: 25,
         description: 'Avoids holes in numbers',
         contexts: {
             brut: {
                 find: /(\d+)\.\s(\d+)/gi,
                 replace: '$1.$2'
-            },
-        },
+            }
+        }
     }, {
+        id: 24,
         description: 'Replaces unit exponents with correct exponents',
         contexts: {
             brut: {
@@ -431,8 +447,17 @@ var frenchRules = [
                 }
             }
         }
+    }, {
+        id: 25,
+        description: 'Avoids chaining symbol-space-symbol',
+        contexts: {
+            brut: {
+                find: /([\])}])\s([.!?])/gi,
+                replace: '$1$2'
+            }
+        }
     }
-].map(function (a, index) { return (__assign({}, a, { id: index })); });
+];
 
 //# sourceMappingURL=index.js.map
 
