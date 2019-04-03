@@ -148,6 +148,16 @@ var ordinalNumbersSorted = Object.values(ordinalNumbersMapPlural)
     .sort(function (b, a) { return (b.length < a.length ? 1 : -1); });
 var frenchRules = [
     {
+        description: 'Trims the input string',
+        contexts: {
+            brut: {
+                replace: function (str) {
+                    return str.trim();
+                }
+            }
+        }
+    },
+    {
         description: 'Replaces every type of space with a standard space',
         contexts: {
             brut: {
@@ -155,8 +165,7 @@ var frenchRules = [
                 replace: "" + LIST.SPACES.SPACE
             }
         }
-    },
-    {
+    }, {
         description: 'Replaces multiple spaces in a row with a single one',
         contexts: {
             brut: {
@@ -164,8 +173,7 @@ var frenchRules = [
                 replace: LIST.SPACES.SPACE
             }
         }
-    },
-    {
+    }, {
         description: 'Replaces three dots with an ellipsis',
         contexts: {
             brut: {
@@ -173,8 +181,7 @@ var frenchRules = [
                 replace: "" + LIST.ELLIPSIS
             }
         }
-    },
-    {
+    }, {
         description: 'Replaces any quote with dumb quotes',
         contexts: {
             brut: {
@@ -182,26 +189,23 @@ var frenchRules = [
                 replace: '"'
             }
         }
-    },
-    {
-        description: 'Removes spaces before simple punctuations',
+    }, {
+        description: 'Removes spaces before simple punctuations and symbols',
         contexts: {
             brut: {
-                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
-                replace: '$1$2'
+                find: /\s*([,.!:;?\-)“(«»"’\]\['])/gi,
+                replace: '$1'
             }
         }
-    },
-    {
-        description: 'Removes spaces after simple punctuations',
+    }, {
+        description: 'Removes spaces after simple punctuations and symbols',
         contexts: {
             brut: {
-                find: /(\w)\s+([,.!:;?\-)“(«»"’\]\['])/gi,
-                replace: '$1$2'
+                find: /([,.!:;?\-)“(«»"’\]\['])\s*/gi,
+                replace: '$1'
             }
         }
-    },
-    {
+    }, {
         description: 'Replaces quotes with french quotes',
         contexts: {
             brut: {
@@ -221,44 +225,47 @@ var frenchRules = [
                 }
             }
         }
-    },
-    {
-        description: 'Ensures non-breaking space after opening quote',
+    }, {
+        description: 'Inserts space before some punctuations & symbols',
         contexts: {
             brut: {
-                find: /«\s*/gi,
-                replace: "" + LIST.LQUOTE + LIST.SPACES.NO_BREAK_SPACE
+                find: /([[{(«])/gi,
+                replace: LIST.SPACES.SPACE + "$1"
             }
         }
-    },
-    {
-        description: 'Ensures non-breaking space after closing quote',
+    }, {
+        description: 'Inserts nbsp before some punctuations & symbols',
         contexts: {
             brut: {
-                find: /\s*»/gi,
-                replace: "" + LIST.SPACES.NO_BREAK_SPACE + LIST.RQUOTE
+                find: /([:»])/gi,
+                replace: LIST.SPACES.NO_BREAK_SPACE + "$1"
             }
         }
-    },
-    {
-        description: 'Ensures a space after a simple or double punctuation',
+    }, {
+        description: 'Inserts thin-nbsp before some punctuations & symbols',
         contexts: {
             brut: {
-                find: /([,.:;)\]}»?!])\s*(\S)/gi,
-                replace: '$1 $2'
+                find: /([;!?])/gi,
+                replace: LIST.SPACES.NARROW_NO_BREAK_SPACE + "$1"
             }
         }
-    },
-    {
-        description: 'Ensures a single narrow non-breaking space before a double punctuation',
+    }, {
+        description: 'Inserts space after some punctuations & symbols',
         contexts: {
             brut: {
-                find: /\s*([!?({\]«:;])/gi,
-                replace: LIST.SPACES.THIN_SPACE + "$1"
+                find: /([!.,;:?)}\]»])/gi,
+                replace: "$1" + LIST.SPACES.SPACE
             }
         }
-    },
-    {
+    }, {
+        description: 'Inserts nbsp after some punctuations & symbols',
+        contexts: {
+            brut: {
+                find: /(«)/gi,
+                replace: "$1" + LIST.SPACES.SPACE
+            }
+        }
+    }, {
         description: 'Normalizes singular ordinal numbers',
         contexts: {
             brut: {
@@ -271,8 +278,7 @@ var frenchRules = [
                 }
             }
         }
-    },
-    {
+    }, {
         description: 'Normalizes plural ordinal numbers',
         contexts: {
             brut: {
@@ -285,8 +291,7 @@ var frenchRules = [
                 }
             }
         }
-    },
-    {
+    }, {
         description: 'Exposes ordinal numbers',
         contexts: {
             html: {
@@ -294,8 +299,7 @@ var frenchRules = [
                 replace: "$1<sup>$2</sup>"
             }
         }
-    },
-    {
+    }, {
         description: 'Normalizes titles (Mr, Mme)...',
         contexts: {
             html: {
@@ -303,8 +307,7 @@ var frenchRules = [
                 replace: "M<sup>$1</sup>$2"
             }
         }
-    },
-    {
+    }, {
         description: 'Rewrites centuries',
         contexts: {
             html: {
@@ -316,8 +319,7 @@ var frenchRules = [
                 replace: '$1e'
             }
         }
-    },
-    {
+    }, {
         description: 'Glues numbers to the word after them',
         contexts: {
             brut: {
@@ -325,8 +327,7 @@ var frenchRules = [
                 replace: "$1" + LIST.SPACES.NO_BREAK_SPACE + "$2"
             }
         }
-    },
-    {
+    }, {
         description: 'Packs numbers by 3 above 10^4',
         contexts: {
             brut: {
@@ -371,6 +372,14 @@ var frenchRules = [
             }
         }
     }, {
+        description: 'Replaces spaces after pronouns with nbsps',
+        contexts: {
+            brut: {
+                find: /(dans|d(?:[’'])une?|sous|celles?|ce(?:tte)?|celui|ceux|nous|pour|avec|vous|-ci) /gi,
+                replace: "$1" + LIST.SPACES.NO_BREAK_SPACE
+            }
+        }
+    }, {
         description: 'Glues capitalized words (acronyms) to the word before them',
         contexts: {
             brut: {
@@ -390,8 +399,36 @@ var frenchRules = [
         description: 'Replaces dashes inside words with non-break dashes',
         contexts: {
             brut: {
-                find: /(\w)-(\w)/gi,
+                find: /(\w)(?:[-])(\w)/gi,
                 replace: "$1" + LIST.NO_BREAK_HYPHEN + "$2"
+            }
+        }
+    }, {
+        description: 'Avoids holes in numbers',
+        contexts: {
+            brut: {
+                find: /(\d+)\.\s(\d+)/gi,
+                replace: '$1.$2'
+            },
+        },
+    }, {
+        description: 'Replaces unit exponents with correct exponents',
+        contexts: {
+            brut: {
+                replace: function (str) {
+                    var find = /(m\d)/gi;
+                    var s = {
+                        m2: 'm²',
+                        m3: 'm³'
+                    };
+                    var replace = function (_, m) {
+                        var a = s[m];
+                        if (typeof a !== 'undefined')
+                            return a;
+                        return m;
+                    };
+                    return str.replace(find, replace);
+                }
             }
         }
     }
