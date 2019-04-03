@@ -1,6 +1,6 @@
-import { RuleInterface } from '~/lib/RuleInterface'
+import {RuleInterface} from '~/lib/RuleInterface'
 
-import { LIST } from '~/config/characters'
+import {LIST} from '~/config/characters'
 
 const ordinalNumbersMapSingular = {
     er: 'er',
@@ -292,7 +292,7 @@ export const frenchRules: RuleInterface[] = [
                 }
             }
         }
-    },  {
+    }, {
         id: 21,
         description: 'Replaces spaces after pronouns with nbsps',
         contexts: {
@@ -338,7 +338,7 @@ export const frenchRules: RuleInterface[] = [
                 replace: '$1.$2'
             }
         }
-    },{
+    }, {
         id: 24,
         description: 'Replaces unit exponents with correct exponents',
         contexts: {
@@ -368,4 +368,4 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }
-];
+]

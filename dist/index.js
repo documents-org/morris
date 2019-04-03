@@ -107,7 +107,6 @@ var LIST = {
         ZERO_WIDTH_NON_BREAKING: '\uFEFF'
     }
 };
-//# sourceMappingURL=characters.js.map
 
 var ordinalNumbersMapSingular = {
     er: 'er',
@@ -459,8 +458,6 @@ var frenchRules = [
     }
 ];
 
-//# sourceMappingURL=index.js.map
-
 var Morris = (function () {
     function Morris(rules) {
         if (Array.isArray(rules) && rules.length > 0) {
@@ -550,7 +547,6 @@ var Morris = (function () {
     return Morris;
 }());
 var instance = new Morris(frenchRules);
-//# sourceMappingURL=index.js.map
 
 exports.Morris = Morris;
 exports.default = instance;
