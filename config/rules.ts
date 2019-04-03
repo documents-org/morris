@@ -334,12 +334,12 @@ export const frenchRules: RuleInterface[] = [
         description: 'Avoids holes in numbers',
         contexts: {
             brut: {
-                find: /(\d+)\.\s(\d+)/gi,
+                find: /(\d+)\.\s*(\d+)/gi,
                 replace: '$1.$2'
             }
         }
     }, {
-        id: 24,
+        id: 26,
         description: 'Replaces unit exponents with correct exponents',
         contexts: {
             brut: {
@@ -359,7 +359,7 @@ export const frenchRules: RuleInterface[] = [
             }
         }
     }, {
-        id: 25,
+        id: 27,
         description: 'Avoids chaining symbol-space-symbol',
         contexts: {
             brut: {
