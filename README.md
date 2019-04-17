@@ -5,6 +5,9 @@ It's designed to operate on raw text, and apply rules either for plaintext, envi
 
 Its counterpart to work in a DOM environment and add real layout rules, such as line awareness, content block size awareness, hyphenation (or avoidance of), will be found at [@documents-design/morris-dom.git](https://github.com/documents-design/morris-dom.git).
 
+[Tester here](https://documents-design.github.io/morris-demo)
+![](meta/morris-demo.png)
+
 ## Usage
 
 ```js
