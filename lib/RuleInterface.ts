@@ -1,5 +1,5 @@
 export interface RuleInterface {
-    id: Number
+    id: number
     contexts: {
         [key: string]: RuleApplication;
     }

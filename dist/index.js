@@ -455,7 +455,7 @@ var frenchRules = [
                 replace: '$1$2'
             }
         }
-    }
+    },
 ];
 
 var Morris = (function () {
@@ -468,11 +468,25 @@ var Morris = (function () {
                 this.rules = rules;
             }
         }
+    }
+    Morris.prototype.buildRuleMap = function () {
         this.ruleMap = this.rules.reduce(function (map, rule) {
             map[rule.id.toString(10)] = Object.keys(map).length;
             return map;
         }, {});
-    }
+    };
+    Morris.prototype.getRuleID = function () {
+        return this.rules.reduce(function (b, r) {
+            if (r.id > b)
+                return r.id;
+            return b;
+        }, 0) + 1;
+    };
+    Morris.prototype.addRule = function (rule) {
+        this.rules = this.rules.concat([rule]);
+        this.buildRuleMap();
+        return this;
+    };
     Object.defineProperty(Morris.prototype, "getContexts", {
         get: function () {
             return this.rules.reduce(function (acc, rule) {

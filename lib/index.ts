@@ -16,10 +16,26 @@ export class Morris {
                 this.rules = rules as RuleInterface[]
             }
         }
+    }
+
+    private buildRuleMap() {
         this.ruleMap = this.rules.reduce((map, rule) => {
             map[rule.id.toString(10)] = Object.keys(map).length
             return map
         }, {})
+    }
+
+    getRuleID(): number {
+        return this.rules.reduce((b, r) => {
+            if (r.id > b) return r.id
+            return b
+        }, 0) + 1
+    }
+
+    addRule(rule: RuleInterface): Morris {
+        this.rules = [...this.rules, rule]
+        this.buildRuleMap()
+        return this
     }
 
     get getContexts(): string[] {

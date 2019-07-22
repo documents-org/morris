@@ -367,5 +367,5 @@ export const frenchRules: RuleInterface[] = [
                 replace: '$1$2'
             }
         }
-    }
+    },
 ]
