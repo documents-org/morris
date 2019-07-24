@@ -19,6 +19,25 @@ m.apply(inputText, context, ruleId); // applies an individual rule
 m.format(inputText, context) // applies every rule
 ```
 
+## Runtime extension
+
+You could have special rules that depend on your particular project. For instance, we had a case where the symbol `(m.)` should be treated as-is and not like the rest of punctuation rules.
+Let's add a runtime rule for this. `getRuleID` gives the next available ID.
+```js
+const m = new Morris();
+
+m.addRule({
+    id: william.getRuleID(),
+    description: "Avoids messing with (m.) symbols.",
+    contexts: {
+        brut: {
+            find: /\(\s*m\.\s*\)\s*/gi,
+            replace: "(m.)"
+        }
+    },
+})
+```
+Since this rule is added last, it repairs the harm done to our `(m.)` symbol.
 
 ## Rules
 All rules satisfy RuleInterface.
