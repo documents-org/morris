@@ -373,7 +373,7 @@ var frenchRules = [
                 replace: function (text) {
                     return text.split(' ')
                         .reduce(function (out, word) {
-                        if (word.length < 4)
+                        if ((word.match(/\w/g) || []).length < 4)
                             return "" + out + word + LIST.SPACES.NO_BREAK_SPACE;
                         return "" + out + word + " ";
                     }, '');
@@ -455,7 +455,7 @@ var frenchRules = [
                 replace: '$1$2'
             }
         }
-    },
+    }
 ];
 
 var Morris = (function () {

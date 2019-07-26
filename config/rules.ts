@@ -286,7 +286,7 @@ export const frenchRules: RuleInterface[] = [
                 replace(text: string): string {
                     return text.split(' ')
                         .reduce((out, word) => {
-                            if (word.length < 4) return `${out}${word}${LIST.SPACES.NO_BREAK_SPACE}`
+                            if ((word.match(/\w/g) || []).length < 4) return `${out}${word}${LIST.SPACES.NO_BREAK_SPACE}`
                             return `${out}${word} `
                         }, '')
                 }
@@ -367,5 +367,5 @@ export const frenchRules: RuleInterface[] = [
                 replace: '$1$2'
             }
         }
-    },
+    }
 ]
