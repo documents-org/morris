@@ -1,8 +1,7 @@
 {
     "name": "@documents-design/morris",
-    "version": "0.1.14",
+    "version": "0.1.15",
     "main": "dist/index.js",
-    "types": "morris/index.d.ts",
     "repository": "https://github.com/documents-design/morris.git",
     "author": "Regnis Olbap <singer.pablo@gmail.com>",
     "license": "MIT",
