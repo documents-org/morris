@@ -458,6 +458,7 @@ var frenchRules = [
     }
 ];
 
+var frenchRules$1 = frenchRules;
 var Morris = (function () {
     function Morris(rules) {
         if (Array.isArray(rules) && rules.length > 0) {
@@ -523,7 +524,8 @@ var Morris = (function () {
     Morris.prototype.format = function (text, context, callback) {
         var _this = this;
         if (context === void 0) { context = 'brut'; }
-        if (callback === void 0) { callback = function (text) { }; }
+        if (callback === void 0) { callback = function (text) {
+        }; }
         return this.rules.reduce(function (str, rule) {
             var result = _this.apply(str, context, rule.id);
             callback(result);
@@ -533,9 +535,11 @@ var Morris = (function () {
     Morris.prototype.asyncFormat = function (text, context, callback) {
         var _this = this;
         if (context === void 0) { context = 'brut'; }
-        if (callback === void 0) { callback = function (text) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
-            return [2];
-        }); }); }; }
+        if (callback === void 0) { callback = function (text) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2];
+            });
+        }); }; }
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
@@ -560,7 +564,6 @@ var Morris = (function () {
     };
     return Morris;
 }());
-var instance = new Morris(frenchRules);
 
+exports.frenchRules = frenchRules$1;
 exports.Morris = Morris;
-exports.default = instance;

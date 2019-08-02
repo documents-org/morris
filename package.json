@@ -1,28 +1,28 @@
 {
-    "name": "@documents-design/morris",
-    "version": "0.1.15",
-    "main": "dist/index.js",
-    "repository": "https://github.com/documents-design/morris.git",
-    "author": "Regnis Olbap <singer.pablo@gmail.com>",
-    "license": "MIT",
-    "private": false,
-    "devDependencies": {
-        "@types/jest": "^24.0.3",
-        "babel-jest": "^24.1.0",
-        "csv-parse": "^4.3.3",
-        "jest": "^23.6.0",
-        "rollup": "^1.1.2",
-        "rollup-plugin-alias": "^1.5.1",
-        "rollup-plugin-typescript2": "^0.19.2",
-        "ts-jest": "^23.10.5",
-        "tslint": "^5.11.0",
-        "tslint-config-standard": "^7.0.0",
-        "typescript": "^3.3.3"
-    },
-    "scripts": {
-        "build": "yarn rollup -c",
-        "test": "jest --config test/jest.conf.js",
-        "test-watch": "jest --config test/jest.conf.js --watch",
-        "watch": "yarn rollup -c -w"
-    }
+  "name": "@documents-design/morris",
+  "version": "0.1.20",
+  "main": "dist/index.js",
+  "repository": "https://github.com/documents-design/morris.git",
+  "author": "Regnis Olbap <singer.pablo@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@types/jest": "^24.0.3",
+    "babel-jest": "^24.1.0",
+    "csv-parse": "^4.3.3",
+    "jest": "^23.6.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-alias": "^1.5.1",
+    "rollup-plugin-typescript2": "^0.19.2",
+    "ts-jest": "^23.10.5",
+    "tslint": "^5.11.0",
+    "tslint-config-standard": "^7.0.0",
+    "typescript": "^3.3.3"
+  },
+  "scripts": {
+    "build": "yarn rollup -c",
+    "test": "jest --config test/jest.conf.js",
+    "test-watch": "jest --config test/jest.conf.js --watch",
+    "watch": "yarn rollup -c -w"
+  }
 }

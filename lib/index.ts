@@ -1,5 +1,7 @@
-import { frenchRules } from '~/config/index'
+import { frenchRules as rules } from '~/config/index'
 import { RuleInterface } from '~/lib/RuleInterface'
+
+export const frenchRules = rules
 
 export class Morris {
     private rules: RuleInterface[]
@@ -67,7 +69,8 @@ export class Morris {
         return text
     }
 
-    format(text: string, context: string = 'brut', callback = (text: string) => {}): string {
+    format(text: string, context: string = 'brut', callback = (text: string) => {
+    }): string {
         return this.rules.reduce((str, rule) => {
             const result = this.apply(str, context, rule.id)
             callback(result)
@@ -75,7 +78,8 @@ export class Morris {
         }, text)
     }
 
-    async asyncFormat(text: string, context: string = 'brut', callback = async (text: string) => {}): Promise<string> {
+    async asyncFormat(text: string, context: string = 'brut', callback = async (text: string) => {
+    }): Promise<string> {
         return this.rules.reduce(async (str, rule) => {
             const result = this.apply(await str, context, rule.id)
             await callback(result)
@@ -83,6 +87,3 @@ export class Morris {
         }, Promise.resolve(text))
     }
 }
-
-const instance = new Morris(frenchRules)
-export default instance
